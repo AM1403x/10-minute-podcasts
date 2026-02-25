@@ -264,7 +264,107 @@
       to { transform: rotate(360deg); }
     }
 
-    /* Status messages */
+    /* Success state — replaces form */
+    .success-state {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+
+    .success-state.visible {
+      display: flex;
+    }
+
+    /* Animated checkmark */
+    .checkmark-circle {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: var(--success);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      animation: circleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+      position: relative;
+    }
+
+    .checkmark-circle::after {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      background: rgba(74, 222, 128, 0.15);
+      animation: ringPulse 1s ease-out 0.4s both;
+    }
+
+    @keyframes circleIn {
+      0% { transform: scale(0); opacity: 0; }
+      60% { transform: scale(1.1); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes ringPulse {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(1.6); opacity: 0; }
+    }
+
+    .checkmark-circle svg {
+      width: 36px;
+      height: 36px;
+      fill: none;
+      stroke: #fff;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 36;
+      stroke-dashoffset: 36;
+      animation: drawCheck 0.4s ease-out 0.35s forwards;
+    }
+
+    @keyframes drawCheck {
+      to { stroke-dashoffset: 0; }
+    }
+
+    .success-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 0.5rem;
+      animation: fadeUp 0.5s ease-out 0.5s both;
+    }
+
+    .success-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      line-height: 1.5;
+      animation: fadeUp 0.5s ease-out 0.6s both;
+    }
+
+    .btn-another {
+      padding: 0.85rem 2rem;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: transparent;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: border-color 0.25s, background 0.25s;
+      animation: fadeUp 0.5s ease-out 0.7s both;
+    }
+
+    .btn-another:hover {
+      border-color: var(--accent);
+      background: var(--accent-glow);
+    }
+
+    /* Error status (stays inline below form) */
     .status {
       margin-top: 1.25rem;
       text-align: center;
@@ -275,26 +375,7 @@
     }
 
     .status.visible { opacity: 1; }
-    .status.success { color: var(--success); }
     .status.error { color: var(--error); }
-
-    /* Success checkmark animation */
-    @keyframes scaleIn {
-      from { transform: scale(0); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    .status.success::before {
-      content: '';
-      display: inline-block;
-      width: 6px;
-      height: 6px;
-      background: var(--success);
-      border-radius: 50%;
-      margin-right: 8px;
-      vertical-align: middle;
-      animation: scaleIn 0.3s ease-out;
-    }
 
     /* Footer */
     footer {
@@ -350,7 +431,7 @@
       <div class="step">
         <div class="step-icon">⚡</div>
         <div class="step-label">We distil</div>
-        <div class="step-desc">AI extracts the key ideas</div>
+        <div class="step-desc">We extract the key ideas</div>
       </div>
       <div class="step">
         <div class="step-icon">📖</div>
@@ -376,6 +457,15 @@
         <button type="submit">Summarise this podcast</button>
       </form>
       <p class="status" id="status"></p>
+
+      <div class="success-state" id="successState">
+        <div class="checkmark-circle">
+          <svg viewBox="0 0 24 24"><polyline points="6 12 10 16 18 8"/></svg>
+        </div>
+        <div class="success-title">You're all set!</div>
+        <div class="success-desc">We'll summarise this podcast and post it on X soon.</div>
+        <button class="btn-another" id="addAnother">Submit another podcast</button>
+      </div>
     </div>
   </main>
 
@@ -389,11 +479,32 @@
   <script>
     const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwxRAqsclFVcT-IHW80gZWOOKOoDm-f2CzAhBiRZowjlEujH6yl7VI5hKBzu9_lDauf/exec';
 
-    document.getElementById('podcastForm').addEventListener('submit', async (e) => {
+    const form = document.getElementById('podcastForm');
+    const successState = document.getElementById('successState');
+    const status = document.getElementById('status');
+
+    function showForm() {
+      form.style.display = 'flex';
+      status.style.display = 'block';
+      successState.classList.remove('visible');
+    }
+
+    function showSuccess() {
+      form.style.display = 'none';
+      status.style.display = 'none';
+      // Force animation replay by removing and re-adding
+      successState.classList.remove('visible');
+      void successState.offsetWidth;
+      successState.innerHTML = successState.innerHTML;
+      successState.classList.add('visible');
+      // Re-attach the button listener
+      document.getElementById('addAnother').addEventListener('click', showForm);
+    }
+
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
       const btn = e.target.querySelector('button');
-      const status = document.getElementById('status');
 
       btn.disabled = true;
       btn.classList.add('loading');
@@ -414,9 +525,8 @@
           body: JSON.stringify(data),
         });
 
-        status.textContent = "Got it! We'll post the summary on X soon.";
-        status.className = 'status success visible';
-        e.target.reset();
+        form.reset();
+        showSuccess();
       } catch (err) {
         status.textContent = 'Something went wrong. Please try again.';
         status.className = 'status error visible';
@@ -425,6 +535,8 @@
         btn.classList.remove('loading');
       }
     });
+
+    document.getElementById('addAnother').addEventListener('click', showForm);
   </script>
 </body>
 </html>
