@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>10 Minute Podcasts — Hour-long podcasts, summarised into 10-minute reads</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -728,32 +731,33 @@
     document.getElementById('addAnother').addEventListener('click', showForm);
 
     // ── Recent Reads ──
+    const V = '2'; // bump this to bust cache
     const READS = [
       {
         name: "Pavel Durov",
         role: "Founder of Telegram",
-        image: "img/durov.png",
+        image: "img/durov.jpg",
         notesUrl: "https://x.com/AnishA_Moonka",
         podcastUrl: "https://x.com/AnishA_Moonka"
       },
       {
         name: "Dietrich Mateschitz",
         role: "Founder of Red Bull",
-        image: "img/mateschitz.png",
+        image: "img/mateschitz.jpg",
         notesUrl: "https://x.com/AnishA_Moonka",
         podcastUrl: "https://x.com/AnishA_Moonka"
       },
       {
         name: "Dario Amodei",
         role: "Founder of Anthropic",
-        image: "img/amodei.png",
+        image: "img/amodei.jpg",
         notesUrl: "https://x.com/AnishA_Moonka",
         podcastUrl: "https://x.com/AnishA_Moonka"
       },
       {
         name: "Naval Ravikant",
         role: "Founder of AngelList",
-        image: "img/naval.png",
+        image: "img/naval.jpg",
         notesUrl: "https://x.com/AnishA_Moonka",
         podcastUrl: "https://x.com/AnishA_Moonka"
       }
@@ -766,7 +770,7 @@
       const delay = 0.5 + index * 0.1;
       return `
         <div class="read-card" style="animation-delay: ${delay}s">
-          <img src="${read.image}" alt="${read.name}" loading="lazy">
+          <img src="${read.image}?v=${V}" alt="${read.name}" loading="lazy">
           <div class="read-overlay">
             <div class="read-name">${read.name}</div>
             <div class="read-role">${read.role}</div>
