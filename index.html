@@ -383,6 +383,134 @@
     .status.visible { opacity: 1; }
     .status.error { color: var(--error); }
 
+    /* Recent reads section */
+    .reads-section {
+      width: 100%;
+      margin-top: 3rem;
+      animation: fadeUp 0.8s ease-out 0.45s both;
+    }
+
+    .reads-header {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .reads-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.3rem;
+    }
+
+    .reads-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+
+    .reads-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .read-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+      opacity: 0;
+      animation: fadeUp 0.5s ease-out both;
+    }
+
+    .read-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent);
+      box-shadow: 0 8px 24px var(--accent-glow);
+    }
+
+    .read-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 1rem;
+      flex-shrink: 0;
+    }
+
+    .read-name {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 0.2rem;
+      line-height: 1.3;
+    }
+
+    .read-role {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      line-height: 1.3;
+      flex: 1;
+    }
+
+    .read-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: transparent;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: border-color 0.25s, color 0.25s, background 0.25s;
+    }
+
+    .read-cta:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-glow);
+    }
+
+    .read-cta svg {
+      width: 12px;
+      height: 12px;
+      fill: currentColor;
+    }
+
+    .reads-toggle {
+      display: none;
+      margin: 1.25rem auto 0;
+      padding: 0.6rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: transparent;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: border-color 0.25s, color 0.25s;
+    }
+
+    .reads-toggle:hover {
+      border-color: var(--accent);
+      color: var(--text);
+    }
+
     /* Footer */
     footer {
       position: relative;
@@ -417,6 +545,7 @@
       h1 { font-size: 2.4rem; }
       .tagline { font-size: 1.05rem; }
       .form-card { padding: 1.75rem; }
+      .reads-section { margin-top: 2.5rem; }
     }
 
     /* Mobile */
@@ -439,6 +568,11 @@
       .checkmark-circle svg { width: 30px; height: 30px; }
       .success-title { font-size: 1.1rem; }
       .success-desc { font-size: 0.85rem; }
+      .reads-section { margin-top: 2rem; }
+      .reads-title { font-size: 1.2rem; }
+      .reads-grid { grid-template-columns: 1fr; }
+      .read-card { padding: 1.25rem 1rem; }
+      .read-avatar { width: 60px; height: 60px; font-size: 1.25rem; }
     }
   </style>
 </head>
@@ -494,6 +628,14 @@
         <button class="btn-another" id="addAnother">Submit another podcast</button>
       </div>
     </div>
+    <section class="reads-section" id="readsSection">
+      <div class="reads-header">
+        <div class="reads-title">Recent reads</div>
+        <div class="reads-subtitle">Podcasts we've summarised so far</div>
+      </div>
+      <div class="reads-grid" id="readsGrid"></div>
+      <button class="reads-toggle" id="readsToggle"></button>
+    </section>
   </main>
 
   <footer>
@@ -564,6 +706,65 @@
     });
 
     document.getElementById('addAnother').addEventListener('click', showForm);
+
+    // ── Recent Reads ──
+    const READS = [
+      {
+        name: "Pavel Durov",
+        role: "Founder of Telegram",
+        color: "#6366f1",
+        url: "https://x.com/AnishA_Moonka"
+      },
+      {
+        name: "Dietrich Mateschitz",
+        role: "Founder of Red Bull",
+        color: "#dc2626",
+        url: "https://x.com/AnishA_Moonka"
+      }
+    ];
+
+    const VISIBLE_COUNT = 3;
+    let showingAll = false;
+
+    function getInitials(name) {
+      return name.split(' ').map(w => w[0]).join('').slice(0, 2);
+    }
+
+    function renderCard(read, index) {
+      const delay = 0.5 + index * 0.1;
+      return `
+        <div class="read-card" style="animation-delay: ${delay}s">
+          <div class="read-avatar" style="background: ${read.color}">${getInitials(read.name)}</div>
+          <div class="read-name">${read.name}</div>
+          <div class="read-role">${read.role}</div>
+          <a class="read-cta" href="${read.url}" target="_blank" rel="noopener">
+            Read on X
+            <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+        </div>`;
+    }
+
+    function renderReads() {
+      const grid = document.getElementById('readsGrid');
+      const toggle = document.getElementById('readsToggle');
+      const visible = showingAll ? READS : READS.slice(0, VISIBLE_COUNT);
+
+      grid.innerHTML = visible.map((r, i) => renderCard(r, i)).join('');
+
+      if (READS.length > VISIBLE_COUNT) {
+        toggle.style.display = 'block';
+        toggle.textContent = showingAll ? 'Show less' : `Show all ${READS.length} reads`;
+      } else {
+        toggle.style.display = 'none';
+      }
+    }
+
+    document.getElementById('readsToggle').addEventListener('click', () => {
+      showingAll = !showingAll;
+      renderReads();
+    });
+
+    renderReads();
   </script>
 </body>
 </html>
