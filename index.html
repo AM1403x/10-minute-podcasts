@@ -434,17 +434,18 @@
     }
 
     .read-avatar {
-      width: 72px;
-      height: 72px;
+      width: 80px;
+      height: 80px;
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #fff;
+      object-fit: cover;
       margin-bottom: 1rem;
       flex-shrink: 0;
+      border: 2px solid var(--border);
+      transition: border-color 0.25s;
+    }
+
+    .read-card:hover .read-avatar {
+      border-color: var(--accent);
     }
 
     .read-name {
@@ -572,7 +573,7 @@
       .reads-title { font-size: 1.2rem; }
       .reads-grid { grid-template-columns: 1fr; }
       .read-card { padding: 1.25rem 1rem; }
-      .read-avatar { width: 60px; height: 60px; font-size: 1.25rem; }
+      .read-avatar { width: 64px; height: 64px; }
     }
   </style>
 </head>
@@ -712,13 +713,25 @@
       {
         name: "Pavel Durov",
         role: "Founder of Telegram",
-        color: "#6366f1",
+        image: "img/durov.png",
         url: "https://x.com/AnishA_Moonka"
       },
       {
         name: "Dietrich Mateschitz",
         role: "Founder of Red Bull",
-        color: "#dc2626",
+        image: "img/mateschitz.png",
+        url: "https://x.com/AnishA_Moonka"
+      },
+      {
+        name: "Dario Amodei",
+        role: "Founder of Anthropic",
+        image: "img/amodei.png",
+        url: "https://x.com/AnishA_Moonka"
+      },
+      {
+        name: "Naval Ravikant",
+        role: "Founder of AngelList",
+        image: "img/naval.png",
         url: "https://x.com/AnishA_Moonka"
       }
     ];
@@ -726,15 +739,11 @@
     const VISIBLE_COUNT = 3;
     let showingAll = false;
 
-    function getInitials(name) {
-      return name.split(' ').map(w => w[0]).join('').slice(0, 2);
-    }
-
     function renderCard(read, index) {
       const delay = 0.5 + index * 0.1;
       return `
         <div class="read-card" style="animation-delay: ${delay}s">
-          <div class="read-avatar" style="background: ${read.color}">${getInitials(read.name)}</div>
+          <img class="read-avatar" src="${read.image}" alt="${read.name}" loading="lazy">
           <div class="read-name">${read.name}</div>
           <div class="read-role">${read.role}</div>
           <a class="read-cta" href="${read.url}" target="_blank" rel="noopener">
