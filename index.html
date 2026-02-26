@@ -530,6 +530,98 @@
       color: var(--text);
     }
 
+    /* Coming Soon section */
+    .coming-soon-section {
+      width: 100%;
+      margin-top: 3rem;
+      animation: fadeUp 0.8s ease-out 0.6s both;
+    }
+
+    .coming-soon-header {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .coming-soon-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.3rem;
+    }
+
+    .coming-soon-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+
+    .coming-soon-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .coming-soon-card {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      aspect-ratio: 3 / 4;
+      opacity: 0;
+      animation: fadeUp 0.5s ease-out both;
+      cursor: default;
+    }
+
+    .coming-soon-card img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(0.5) brightness(0.6);
+      transition: filter 0.3s;
+    }
+
+    .coming-soon-card:hover img {
+      filter: grayscale(0.2) brightness(0.75);
+    }
+
+    .coming-soon-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 3.5rem 0.75rem 0.85rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.85) 40%, rgba(0,0,0,0.4) 70%, transparent 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .coming-soon-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.4rem 0.75rem;
+      border-radius: 7px;
+      font-family: inherit;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.5);
+      border: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 0.4rem;
+    }
+
+    /* Mobile coming soon */
+    @media (max-width: 420px) {
+      .coming-soon-section { margin-top: 2rem; }
+      .coming-soon-title { font-size: 1.2rem; }
+      .coming-soon-overlay { padding: 2rem 0.6rem 0.6rem; }
+      .coming-soon-badge { font-size: 0.6rem; padding: 0.35rem 0.6rem; }
+    }
+
     /* Footer */
     footer {
       position: relative;
@@ -659,6 +751,14 @@
       <div class="reads-grid" id="readsGrid"></div>
       <button class="reads-toggle" id="readsToggle"></button>
     </section>
+
+    <section class="coming-soon-section" id="comingSoonSection">
+      <div class="coming-soon-header">
+        <div class="coming-soon-title">Coming soon</div>
+        <div class="coming-soon-subtitle">Currently being summarised</div>
+      </div>
+      <div class="coming-soon-grid" id="comingSoonGrid"></div>
+    </section>
   </main>
 
   <footer>
@@ -731,7 +831,7 @@
     document.getElementById('addAnother').addEventListener('click', showForm);
 
     // ── Recent Reads ──
-    const V = '5'; // bump this to bust cache
+    const V = '6'; // bump this to bust cache
     const READS = [
       {
         name: "Jensen Huang",
@@ -811,6 +911,66 @@
     });
 
     renderReads();
+
+    // ── Coming Soon ──
+    const COMING_SOON = [
+      {
+        name: "Dan Houser",
+        role: "Co-founder of Rockstar Games",
+        image: "img/houser.jpg",
+        podcastUrl: "https://www.youtube.com/watch?v=o3gbXDjNWyI"
+      },
+      {
+        name: "Deepinder Goyal",
+        role: "Founder of Zomato",
+        image: "img/deepinder.jpg",
+        podcastUrl: "https://www.youtube.com/watch?v=Xik34jh-doc"
+      },
+      {
+        name: "Brian Cox",
+        role: "Physicist & Science Communicator",
+        image: "img/briancox.jpg",
+        podcastUrl: "https://www.youtube.com/watch?v=bY1EQ6HD-ao"
+      },
+      {
+        name: "Tobi Lütke",
+        role: "Founder of Shopify",
+        image: "img/tobi.jpg",
+        podcastUrl: "https://www.youtube.com/watch?v=ZSM2uFnJ5bs"
+      },
+      {
+        name: "Marc Andreessen",
+        role: "Co-founder of a16z",
+        image: "img/andreessen.jpg",
+        podcastUrl: "https://www.youtube.com/watch?v=87Pm0SGTtN8"
+      }
+    ];
+
+    function renderComingSoonCard(item, index) {
+      const delay = 0.6 + index * 0.1;
+      return `
+        <div class="coming-soon-card" style="animation-delay: ${delay}s">
+          <img src="${item.image}?v=${V}" alt="${item.name}" loading="lazy">
+          <div class="coming-soon-overlay">
+            <div class="read-name">${item.name}</div>
+            <div class="read-role">${item.role}</div>
+            <span class="coming-soon-badge">Coming soon</span>
+            <a class="read-podcast-link" href="${item.podcastUrl}" target="_blank" rel="noopener">Listen to the original podcast &rarr;</a>
+          </div>
+        </div>`;
+    }
+
+    function renderComingSoon() {
+      const grid = document.getElementById('comingSoonGrid');
+      const section = document.getElementById('comingSoonSection');
+      if (COMING_SOON.length === 0) {
+        section.style.display = 'none';
+        return;
+      }
+      grid.innerHTML = COMING_SOON.map((item, i) => renderComingSoonCard(item, i)).join('');
+    }
+
+    renderComingSoon();
   </script>
 </body>
 </html>
