@@ -480,16 +480,17 @@
       font-weight: 600;
       text-decoration: none;
       white-space: nowrap;
-      background: var(--accent);
+      background: linear-gradient(135deg, #f97316, #ef4444, #ec4899);
       color: #fff;
       border: none;
-      transition: opacity 0.2s, transform 0.15s;
+      transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
       margin-bottom: 0.4rem;
     }
 
     .read-btn-notes:hover {
-      opacity: 0.85;
+      opacity: 0.9;
       transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35);
     }
 
     .read-btn-notes svg {
@@ -831,7 +832,7 @@
     document.getElementById('addAnother').addEventListener('click', showForm);
 
     // ── Recent Reads ──
-    const V = '7'; // bump this to bust cache
+    const V = '8'; // bump this to bust cache
     const READS = [
       {
         name: "Deepinder Goyal",
