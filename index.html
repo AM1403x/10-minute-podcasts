@@ -832,8 +832,15 @@
     document.getElementById('addAnother').addEventListener('click', showForm);
 
     // ── Recent Reads ──
-    const V = '8'; // bump this to bust cache
+    const V = '9'; // bump this to bust cache
     const READS = [
+      {
+        name: "Dan Houser",
+        role: "Co-founder of Rockstar Games",
+        image: "img/houser.jpg",
+        notesUrl: "https://x.com/AnishA_Moonka/status/2027446052144746902",
+        podcastUrl: "https://www.youtube.com/watch?v=o3gbXDjNWyI"
+      },
       {
         name: "Deepinder Goyal",
         role: "Founder of Zomato",
@@ -922,12 +929,6 @@
 
     // ── Coming Soon ──
     const COMING_SOON = [
-      {
-        name: "Dan Houser",
-        role: "Co-founder of Rockstar Games",
-        image: "img/houser.jpg",
-        podcastUrl: "https://www.youtube.com/watch?v=o3gbXDjNWyI"
-      },
       {
         name: "Brian Cox",
         role: "Physicist & Science Communicator",
