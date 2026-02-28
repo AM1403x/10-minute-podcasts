@@ -17,7 +17,6 @@
       --bg: #050505;
       --surface: #111;
       --border: #1a1a1a;
-      --border-focus: #333;
       --text: #e8e8e8;
       --text-muted: #777;
       --text-dim: #555;
@@ -25,6 +24,7 @@
       --accent-glow: rgba(167, 139, 250, 0.15);
       --success: #4ade80;
       --error: #f87171;
+      --card-width: 220px;
     }
 
     body {
@@ -68,12 +68,10 @@
       from { opacity: 0; transform: translateY(24px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
     }
-
     @keyframes shimmer {
       0% { background-position: -200% center; }
       100% { background-position: 200% center; }
@@ -103,192 +101,85 @@
       animation: shimmer 4s linear infinite;
     }
 
-    .tagline {
-      font-size: 1.15rem;
-      color: var(--text-muted);
-      font-weight: 400;
-      line-height: 1.5;
-    }
+    .tagline { font-size: 1.15rem; color: var(--text-muted); font-weight: 400; line-height: 1.5; }
 
-    /* Steps */
     .steps {
-      display: flex;
-      gap: 1px;
-      margin-bottom: 3rem;
-      width: 100%;
-      background: var(--border);
-      border-radius: 12px;
-      overflow: hidden;
+      display: flex; gap: 1px; margin-bottom: 3rem; width: 100%;
+      background: var(--border); border-radius: 12px; overflow: hidden;
       animation: fadeUp 0.8s ease-out 0.15s both;
     }
-
     .step {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      padding: 1.25rem 0.75rem;
-      background: var(--surface);
-      transition: background 0.3s;
+      flex: 1; display: flex; flex-direction: column; align-items: center;
+      text-align: center; padding: 1.25rem 0.75rem;
+      background: var(--surface); transition: background 0.3s;
     }
-
     .step:hover { background: #161616; }
     .step-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
     .step-label { font-size: 0.85rem; font-weight: 600; color: #fff; margin-bottom: 0.25rem; }
-    .step-desc { font-size: 0.75rem; color: var(--text-dim); line-height: 1.3; flex: 1; display: flex; align-items: flex-start; }
+    .step-desc { font-size: 0.75rem; color: var(--text-dim); line-height: 1.3; }
 
-    /* Form card */
     .form-card {
-      width: 100%;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 2rem;
-      animation: fadeUp 0.8s ease-out 0.3s both;
+      width: 100%; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; padding: 2rem; animation: fadeUp 0.8s ease-out 0.3s both;
     }
-
     form { display: flex; flex-direction: column; gap: 1.25rem; }
-    .field { position: relative; }
-
     label {
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 0.4rem;
-      display: block;
+      font-size: 0.8rem; font-weight: 500; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.4rem; display: block;
     }
-
     input {
-      width: 100%;
-      padding: 0.9rem 1rem;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      background: var(--bg);
-      color: #fff;
-      font-family: inherit;
-      font-size: 0.95rem;
-      outline: none;
+      width: 100%; padding: 0.9rem 1rem; border: 1px solid var(--border);
+      border-radius: 10px; background: var(--bg); color: #fff;
+      font-family: inherit; font-size: 0.95rem; outline: none;
       transition: border-color 0.25s, box-shadow 0.25s;
     }
-
     input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
     input::placeholder { color: #3a3a3a; }
 
     button {
-      margin-top: 0.25rem;
-      padding: 1rem;
-      border: none;
-      border-radius: 10px;
-      background: var(--accent);
-      color: #fff;
-      font-family: inherit;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
+      margin-top: 0.25rem; padding: 1rem; border: none; border-radius: 10px;
+      background: var(--accent); color: #fff; font-family: inherit;
+      font-size: 1rem; font-weight: 600; cursor: pointer;
       transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
-      position: relative;
-      overflow: hidden;
+      position: relative; overflow: hidden;
     }
-
-    button:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(167, 139, 250, 0.25); }
+    button:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(167,139,250,0.25); }
     button:active { transform: translateY(0); }
     button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
     button.loading { color: transparent; }
-
     button.loading::after {
-      content: '';
-      position: absolute;
-      top: 50%; left: 50%;
-      width: 20px; height: 20px;
-      margin: -10px 0 0 -10px;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      border-top-color: #fff;
-      border-radius: 50%;
-      animation: spin 0.6s linear infinite;
+      content: ''; position: absolute; top: 50%; left: 50%;
+      width: 20px; height: 20px; margin: -10px 0 0 -10px;
+      border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff;
+      border-radius: 50%; animation: spin 0.6s linear infinite;
     }
-
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    .success-state {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem 1rem;
-      text-align: center;
-    }
-
+    .success-state { display: none; flex-direction: column; align-items: center; justify-content: center; padding: 2rem 1rem; text-align: center; }
     .success-state.visible { display: flex; }
-
     .checkmark-circle {
-      width: 72px; height: 72px;
-      border-radius: 50%;
-      background: var(--success);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1.5rem;
-      animation: circleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+      width: 72px; height: 72px; border-radius: 50%; background: var(--success);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.5rem; animation: circleIn 0.5s cubic-bezier(0.175,0.885,0.32,1.275) both;
       position: relative;
     }
-
     .checkmark-circle::after {
-      content: '';
-      position: absolute;
-      inset: -6px;
-      border-radius: 50%;
-      background: rgba(74, 222, 128, 0.15);
-      animation: ringPulse 1s ease-out 0.4s both;
+      content: ''; position: absolute; inset: -6px; border-radius: 50%;
+      background: rgba(74,222,128,0.15); animation: ringPulse 1s ease-out 0.4s both;
     }
-
-    @keyframes circleIn {
-      0% { transform: scale(0); opacity: 0; }
-      60% { transform: scale(1.1); }
-      100% { transform: scale(1); opacity: 1; }
-    }
-
-    @keyframes ringPulse {
-      0% { transform: scale(1); opacity: 1; }
-      100% { transform: scale(1.6); opacity: 0; }
-    }
-
-    .checkmark-circle svg {
-      width: 36px; height: 36px;
-      fill: none; stroke: #fff; stroke-width: 3;
-      stroke-linecap: round; stroke-linejoin: round;
-      stroke-dasharray: 36; stroke-dashoffset: 36;
-      animation: drawCheck 0.4s ease-out 0.35s forwards;
-    }
-
+    @keyframes circleIn { 0% { transform: scale(0); opacity: 0; } 60% { transform: scale(1.1); } 100% { transform: scale(1); opacity: 1; } }
+    @keyframes ringPulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.6); opacity: 0; } }
+    .checkmark-circle svg { width: 36px; height: 36px; fill: none; stroke: #fff; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 36; stroke-dashoffset: 36; animation: drawCheck 0.4s ease-out 0.35s forwards; }
     @keyframes drawCheck { to { stroke-dashoffset: 0; } }
-
-    .success-title { font-size: 1.25rem; font-weight: 600; color: #fff; margin-bottom: 0.5rem; animation: fadeUp 0.5s ease-out 0.5s both; }
-    .success-desc { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 2rem; line-height: 1.5; animation: fadeUp 0.5s ease-out 0.6s both; }
-
-    .btn-another {
-      padding: 0.85rem 2rem;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      background: transparent;
-      color: var(--text);
-      font-family: inherit;
-      font-size: 0.9rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: border-color 0.25s, background 0.25s;
-      animation: fadeUp 0.5s ease-out 0.7s both;
-    }
-
+    .success-title { font-size: 1.25rem; font-weight: 600; color: #fff; margin-bottom: 0.5rem; }
+    .success-desc { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 2rem; line-height: 1.5; }
+    .btn-another { padding: 0.85rem 2rem; border: 1px solid var(--border); border-radius: 10px; background: transparent; color: var(--text); font-family: inherit; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: border-color 0.25s, background 0.25s; }
     .btn-another:hover { border-color: var(--accent); background: var(--accent-glow); }
-
     .status { margin-top: 1.25rem; text-align: center; font-size: 0.9rem; min-height: 1.4em; opacity: 0; transition: opacity 0.4s; }
     .status.visible { opacity: 1; }
     .status.error { color: var(--error); }
 
-    /* ── Marquee Carousel ── */
+    /* ── Carousel Section ── */
     @keyframes marqueeScroll {
       0% { transform: translateX(0); }
       100% { transform: translateX(-50%); }
@@ -298,72 +189,69 @@
       position: relative;
       z-index: 1;
       width: 100%;
-      margin-top: 2.5rem;
+      margin-top: 3rem;
       animation: fadeUp 0.8s ease-out 0.45s both;
     }
+    .carousel-section + .carousel-section { margin-top: 2.5rem; }
 
-    .carousel-section + .carousel-section {
-      margin-top: 2rem;
-    }
+    .carousel-header { text-align: center; margin-bottom: 1.25rem; padding: 0 1.5rem; }
+    .carousel-title { font-size: 1.4rem; font-weight: 700; color: #fff; margin-bottom: 0.3rem; }
+    .carousel-subtitle { font-size: 0.85rem; color: var(--text-dim); }
 
-    .carousel-header {
-      text-align: center;
-      margin-bottom: 1.25rem;
-      padding: 0 1.5rem;
-    }
-
-    .carousel-title {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 0.3rem;
-    }
-
-    .carousel-subtitle {
-      font-size: 0.85rem;
-      color: var(--text-dim);
-    }
-
+    /* Marquee mode (animated) */
     .marquee-wrapper {
       width: 100%;
       overflow: hidden;
-      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
-      mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
+      mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
     }
 
     .marquee-track {
       display: flex;
-      gap: 1rem;
+      gap: 1.25rem;
       width: max-content;
-      animation: marqueeScroll var(--marquee-duration, 40s) linear infinite;
-      padding: 0.5rem 0;
+      padding: 0.75rem 0;
     }
 
-    .marquee-wrapper:hover .marquee-track {
+    .marquee-track.animate {
+      animation: marqueeScroll var(--marquee-duration, 40s) linear infinite;
+    }
+
+    .marquee-wrapper:hover .marquee-track.animate {
       animation-play-state: paused;
     }
 
-    .marquee-wrapper.reverse .marquee-track {
+    .marquee-track.reverse.animate {
       animation-direction: reverse;
     }
 
-    .marquee-card {
+    /* Static mode (centered, no scroll) */
+    .static-row {
+      display: flex;
+      gap: 1.25rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 0.75rem 1.5rem;
+    }
+
+    /* ── Card (shared) ── */
+    .card {
       flex-shrink: 0;
-      width: 155px;
+      width: var(--card-width);
       aspect-ratio: 3 / 4;
-      border-radius: 12px;
+      border-radius: 14px;
       overflow: hidden;
       position: relative;
       cursor: default;
       transition: transform 0.25s, box-shadow 0.25s;
     }
 
-    .marquee-card:hover {
-      transform: scale(1.06);
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+    .card:hover {
+      transform: translateY(-4px) scale(1.03);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
     }
 
-    .marquee-card img {
+    .card img {
       position: absolute;
       inset: 0;
       width: 100%;
@@ -372,50 +260,49 @@
       display: block;
     }
 
-    .marquee-card.coming-soon img {
+    .card.coming-soon img {
       filter: grayscale(0.5) brightness(0.6);
       transition: filter 0.3s;
     }
-
-    .marquee-card.coming-soon:hover img {
+    .card.coming-soon:hover img {
       filter: grayscale(0.2) brightness(0.75);
     }
 
-    .marquee-overlay {
+    .card-overlay {
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
-      padding: 2.5rem 0.6rem 0.6rem;
-      background: linear-gradient(to top, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.85) 40%, rgba(0,0,0,0.4) 70%, transparent 100%);
+      padding: 4rem 0.85rem 0.85rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.8) 35%, rgba(0,0,0,0.3) 65%, transparent 100%);
       display: flex;
       flex-direction: column;
       align-items: flex-start;
     }
 
-    .marquee-card .card-name {
-      font-size: 0.78rem;
+    .card-name {
+      font-size: 0.92rem;
       font-weight: 600;
       color: #fff;
       line-height: 1.2;
     }
 
-    .marquee-card .card-role {
-      font-size: 0.62rem;
+    .card-role {
+      font-size: 0.72rem;
       color: rgba(255,255,255,0.55);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.65rem;
       line-height: 1.3;
     }
 
-    .marquee-card .card-btn {
+    .card-btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 0.25rem;
-      padding: 0.35rem 0.6rem;
-      border-radius: 6px;
+      gap: 0.3rem;
+      padding: 0.45rem 0.75rem;
+      border-radius: 7px;
       font-family: inherit;
-      font-size: 0.58rem;
+      font-size: 0.68rem;
       font-weight: 600;
       text-decoration: none;
       white-space: nowrap;
@@ -423,83 +310,71 @@
       color: #fff;
       border: none;
       transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.35rem;
     }
 
-    .marquee-card .card-btn:hover {
+    .card-btn:hover {
       opacity: 0.9;
       transform: translateY(-1px);
       box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35);
     }
 
-    .marquee-card .card-btn svg {
-      width: 9px;
-      height: 9px;
+    .card-btn svg {
+      width: 10px;
+      height: 10px;
       fill: currentColor;
     }
 
-    .marquee-card .card-link {
-      font-size: 0.52rem;
+    .card-link {
+      font-size: 0.6rem;
       color: rgba(255,255,255,0.4);
       text-decoration: none;
       transition: color 0.2s;
       font-weight: 400;
     }
 
-    .marquee-card .card-link:hover {
+    .card-link:hover {
       color: rgba(255,255,255,0.7);
     }
 
     .coming-soon-badge {
       display: inline-flex;
       align-items: center;
-      gap: 0.25rem;
-      padding: 0.3rem 0.55rem;
-      border-radius: 6px;
+      padding: 0.35rem 0.65rem;
+      border-radius: 7px;
       font-family: inherit;
-      font-size: 0.55rem;
+      font-size: 0.62rem;
       font-weight: 600;
       letter-spacing: 0.04em;
       text-transform: uppercase;
-      background: rgba(255,255,255,0.1);
-      color: rgba(255,255,255,0.5);
+      background: rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.45);
       border: 1px solid rgba(255,255,255,0.1);
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.35rem;
     }
 
     /* Footer */
     footer {
-      position: relative;
-      z-index: 1;
-      padding: 2.5rem 1.5rem;
-      text-align: center;
+      position: relative; z-index: 1;
+      padding: 2.5rem 1.5rem; text-align: center;
       animation: fadeIn 1s ease-out 0.6s both;
     }
-
     footer a {
-      color: var(--text-dim);
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 500;
-      transition: color 0.25s;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
+      color: var(--text-dim); text-decoration: none; font-size: 0.85rem;
+      font-weight: 500; transition: color 0.25s;
+      display: inline-flex; align-items: center; gap: 0.4rem;
     }
-
     footer a:hover { color: var(--text); }
     footer svg { width: 16px; height: 16px; fill: currentColor; }
 
-    /* Tablet */
     @media (max-width: 600px) {
       main { padding: 2rem 1.25rem 1.5rem; }
       h1 { font-size: 2.4rem; }
       .tagline { font-size: 1.05rem; }
       .form-card { padding: 1.75rem; }
-      .marquee-card { width: 140px; }
+      :root { --card-width: 180px; }
     }
 
-    /* Mobile */
     @media (max-width: 420px) {
       main { padding: 1.5rem 1rem 1rem; }
       h1 { font-size: 2rem; }
@@ -517,17 +392,13 @@
       .success-state { padding: 1.5rem 0.5rem; }
       .checkmark-circle { width: 60px; height: 60px; }
       .checkmark-circle svg { width: 30px; height: 30px; }
-      .success-title { font-size: 1.1rem; }
-      .success-desc { font-size: 0.85rem; }
-      .carousel-section { margin-top: 2rem; }
-      .carousel-title { font-size: 1.2rem; }
-      .marquee-card { width: 130px; }
-      .marquee-overlay { padding: 2rem 0.5rem 0.5rem; }
-      .marquee-card .card-name { font-size: 0.7rem; }
-      .marquee-card .card-role { font-size: 0.55rem; }
-      .marquee-card .card-btn { font-size: 0.52rem; padding: 0.3rem 0.5rem; }
-      .marquee-card .card-link { font-size: 0.48rem; }
-      .coming-soon-badge { font-size: 0.5rem; }
+      :root { --card-width: 155px; }
+      .card-overlay { padding: 3rem 0.65rem 0.65rem; }
+      .card-name { font-size: 0.78rem; }
+      .card-role { font-size: 0.62rem; }
+      .card-btn { font-size: 0.6rem; padding: 0.35rem 0.6rem; }
+      .card-link { font-size: 0.52rem; }
+      .coming-soon-badge { font-size: 0.55rem; }
     }
   </style>
 </head>
@@ -573,7 +444,6 @@
         <button type="submit">Summarise this podcast</button>
       </form>
       <p class="status" id="status"></p>
-
       <div class="success-state" id="successState">
         <div class="checkmark-circle">
           <svg viewBox="0 0 24 24"><polyline points="6 12 10 16 18 8"/></svg>
@@ -590,7 +460,7 @@
       <div class="carousel-title">Recent reads</div>
       <div class="carousel-subtitle">Podcasts we've summarised so far</div>
     </div>
-    <div class="marquee-wrapper" id="readsMarquee"></div>
+    <div id="readsContainer"></div>
   </section>
 
   <section class="carousel-section" id="comingSoonSection">
@@ -598,7 +468,7 @@
       <div class="carousel-title">Coming soon</div>
       <div class="carousel-subtitle">Currently being summarised</div>
     </div>
-    <div class="marquee-wrapper reverse" id="comingSoonMarquee"></div>
+    <div id="comingSoonContainer"></div>
   </section>
 
   <footer>
@@ -610,7 +480,6 @@
 
   <script>
     const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwxRAqsclFVcT-IHW80gZWOOKOoDm-f2CzAhBiRZowjlEujH6yl7VI5hKBzu9_lDauf/exec';
-
     const form = document.getElementById('podcastForm');
     const successState = document.getElementById('successState');
     const status = document.getElementById('status');
@@ -620,7 +489,6 @@
       status.style.display = 'block';
       successState.classList.remove('visible');
     }
-
     function showSuccess() {
       form.style.display = 'none';
       status.style.display = 'none';
@@ -630,163 +498,115 @@
       successState.classList.add('visible');
       document.getElementById('addAnother').addEventListener('click', showForm);
     }
-
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const btn = e.target.querySelector('button');
-      btn.disabled = true;
-      btn.classList.add('loading');
-      status.textContent = '';
-      status.className = 'status';
-
+      btn.disabled = true; btn.classList.add('loading');
+      status.textContent = ''; status.className = 'status';
       const data = {
         name: document.getElementById('name').value.trim(),
         email: document.getElementById('email').value.trim(),
         podcastLink: document.getElementById('podcastLink').value.trim(),
       };
-
       try {
-        await fetch(APPS_SCRIPT_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data),
-        });
-        form.reset();
-        showSuccess();
+        await fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+        form.reset(); showSuccess();
       } catch (err) {
         status.textContent = 'Something went wrong. Please try again.';
         status.className = 'status error visible';
-      } finally {
-        btn.disabled = false;
-        btn.classList.remove('loading');
-      }
+      } finally { btn.disabled = false; btn.classList.remove('loading'); }
     });
-
     document.getElementById('addAnother').addEventListener('click', showForm);
 
     // ── Data ──
-    const V = '10'; // bump to bust cache
+    const V = '11';
 
     const READS = [
-      {
-        name: "Tobi Lütke",
-        role: "Founder of Shopify",
-        image: "img/tobi.jpg",
-        notesUrl: "https://x.com/AnishA_Moonka/status/2027623676896850311",
-        podcastUrl: "https://www.youtube.com/watch?v=ZSM2uFnJ5bs"
-      },
-      {
-        name: "Dan Houser",
-        role: "Co-founder of Rockstar Games",
-        image: "img/houser.jpg",
-        notesUrl: "https://x.com/AnishA_Moonka/status/2027446052144746902",
-        podcastUrl: "https://www.youtube.com/watch?v=o3gbXDjNWyI"
-      },
-      {
-        name: "Deepinder Goyal",
-        role: "Founder of Zomato",
-        image: "img/deepinder.jpg",
-        notesUrl: "https://x.com/AnishA_Moonka/status/2027300950764138826",
-        podcastUrl: "https://www.youtube.com/watch?v=Xik34jh-doc"
-      },
-      {
-        name: "Jensen Huang",
-        role: "Founder of NVIDIA",
-        image: "img/jensen.jpg",
-        notesUrl: "https://x.com/AnishA_Moonka/status/2026947777952129109",
-        podcastUrl: "https://www.youtube.com/watch?v=8FOdAc_i_tM"
-      },
-      {
-        name: "Dario Amodei",
-        role: "Founder of Anthropic",
-        image: "img/amodei.jpg",
-        notesUrl: "https://x.com/twitter/status/2026283213925077200",
-        podcastUrl: "https://youtu.be/68ylaeBbdsg?si=3w6G9Lw4PaR1A_0e"
-      },
-      {
-        name: "Pavel Durov",
-        role: "Founder of Telegram",
-        image: "img/durov.jpg",
-        notesUrl: "https://x.com/AnishA_Moonka/status/2026572845640241222",
-        podcastUrl: "https://www.youtube.com/watch?v=qjPH9njnaVU"
-      },
-      {
-        name: "Dietrich Mateschitz",
-        role: "Founder of Red Bull",
-        image: "img/mateschitz.jpg",
-        notesUrl: "https://x.com/AnishA_Moonka/status/2026634935902286108",
-        podcastUrl: "https://www.youtube.com/watch?v=798LBCW-u2M&t=32s"
-      },
-      {
-        name: "Naval Ravikant",
-        role: "Founder of AngelList",
-        image: "img/naval.jpg",
-        notesUrl: "https://x.com/AnishA_Moonka/status/2026221390010212806",
-        podcastUrl: "https://www.youtube.com/watch?v=sXCKgEl9hBo"
-      }
+      { name: "Tobi Lütke", role: "Founder of Shopify", image: "img/tobi.jpg", notesUrl: "https://x.com/AnishA_Moonka/status/2027623676896850311", podcastUrl: "https://www.youtube.com/watch?v=ZSM2uFnJ5bs" },
+      { name: "Dan Houser", role: "Co-founder of Rockstar Games", image: "img/houser.jpg", notesUrl: "https://x.com/AnishA_Moonka/status/2027446052144746902", podcastUrl: "https://www.youtube.com/watch?v=o3gbXDjNWyI" },
+      { name: "Deepinder Goyal", role: "Founder of Zomato", image: "img/deepinder.jpg", notesUrl: "https://x.com/AnishA_Moonka/status/2027300950764138826", podcastUrl: "https://www.youtube.com/watch?v=Xik34jh-doc" },
+      { name: "Jensen Huang", role: "Founder of NVIDIA", image: "img/jensen.jpg", notesUrl: "https://x.com/AnishA_Moonka/status/2026947777952129109", podcastUrl: "https://www.youtube.com/watch?v=8FOdAc_i_tM" },
+      { name: "Dario Amodei", role: "Founder of Anthropic", image: "img/amodei.jpg", notesUrl: "https://x.com/twitter/status/2026283213925077200", podcastUrl: "https://youtu.be/68ylaeBbdsg?si=3w6G9Lw4PaR1A_0e" },
+      { name: "Pavel Durov", role: "Founder of Telegram", image: "img/durov.jpg", notesUrl: "https://x.com/AnishA_Moonka/status/2026572845640241222", podcastUrl: "https://www.youtube.com/watch?v=qjPH9njnaVU" },
+      { name: "Dietrich Mateschitz", role: "Founder of Red Bull", image: "img/mateschitz.jpg", notesUrl: "https://x.com/AnishA_Moonka/status/2026634935902286108", podcastUrl: "https://www.youtube.com/watch?v=798LBCW-u2M&t=32s" },
+      { name: "Naval Ravikant", role: "Founder of AngelList", image: "img/naval.jpg", notesUrl: "https://x.com/AnishA_Moonka/status/2026221390010212806", podcastUrl: "https://www.youtube.com/watch?v=sXCKgEl9hBo" }
     ];
 
     const COMING_SOON = [
-      {
-        name: "Brian Cox",
-        role: "Physicist & Science Communicator",
-        image: "img/briancox.jpg",
-        podcastUrl: "https://www.youtube.com/watch?v=bY1EQ6HD-ao"
-      },
-      {
-        name: "Marc Andreessen",
-        role: "Co-founder of a16z",
-        image: "img/andreessen.jpg",
-        podcastUrl: "https://www.youtube.com/watch?v=87Pm0SGTtN8"
-      }
+      { name: "Brian Cox", role: "Physicist & Science Communicator", image: "img/briancox.jpg", podcastUrl: "https://www.youtube.com/watch?v=bY1EQ6HD-ao" },
+      { name: "Marc Andreessen", role: "Co-founder of a16z", image: "img/andreessen.jpg", podcastUrl: "https://www.youtube.com/watch?v=87Pm0SGTtN8" }
     ];
 
-    // ── Marquee Renderers ──
-    function renderReadCard(r) {
-      return `
-        <div class="marquee-card">
-          <img src="${r.image}?v=${V}" alt="${r.name}" loading="lazy">
-          <div class="marquee-overlay">
-            <div class="card-name">${r.name}</div>
-            <div class="card-role">${r.role}</div>
-            <a class="card-btn" href="${r.notesUrl}" target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
-              Read our notes
-            </a>
-            <a class="card-link" href="${r.podcastUrl}" target="_blank" rel="noopener">Original podcast &rarr;</a>
-          </div>
-        </div>`;
+    // ── Card renderers ──
+    function readCardHTML(r) {
+      return `<div class="card">
+        <img src="${r.image}?v=${V}" alt="${r.name}" loading="lazy">
+        <div class="card-overlay">
+          <div class="card-name">${r.name}</div>
+          <div class="card-role">${r.role}</div>
+          <a class="card-btn" href="${r.notesUrl}" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+            Read our notes
+          </a>
+          <a class="card-link" href="${r.podcastUrl}" target="_blank" rel="noopener">Original podcast &rarr;</a>
+        </div>
+      </div>`;
     }
 
-    function renderComingSoonCard(item) {
-      return `
-        <div class="marquee-card coming-soon">
-          <img src="${item.image}?v=${V}" alt="${item.name}" loading="lazy">
-          <div class="marquee-overlay">
-            <div class="card-name">${item.name}</div>
-            <div class="card-role">${item.role}</div>
-            <span class="coming-soon-badge">Coming soon</span>
-            <a class="card-link" href="${item.podcastUrl}" target="_blank" rel="noopener">Original podcast &rarr;</a>
-          </div>
-        </div>`;
+    function comingSoonCardHTML(item) {
+      return `<div class="card coming-soon">
+        <img src="${item.image}?v=${V}" alt="${item.name}" loading="lazy">
+        <div class="card-overlay">
+          <div class="card-name">${item.name}</div>
+          <div class="card-role">${item.role}</div>
+          <span class="coming-soon-badge">Coming soon</span>
+          <a class="card-link" href="${item.podcastUrl}" target="_blank" rel="noopener">Original podcast &rarr;</a>
+        </div>
+      </div>`;
     }
 
-    function buildMarquee(wrapper, items, renderFn) {
+    // ── Smart layout: static if fits, marquee if overflows ──
+    function buildCarousel(container, items, renderFn, reverse) {
       if (items.length === 0) {
-        wrapper.closest('.carousel-section').style.display = 'none';
+        container.closest('.carousel-section').style.display = 'none';
         return;
       }
+
       const cards = items.map(renderFn).join('');
-      // Duplicate cards for seamless infinite loop
-      wrapper.innerHTML = `<div class="marquee-track">${cards}${cards}</div>`;
-      // Speed: ~4s per card
-      const duration = items.length * 4;
-      wrapper.querySelector('.marquee-track').style.setProperty('--marquee-duration', `${duration}s`);
+      const cardWidth = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--card-width'));
+      const gap = 20; // 1.25rem
+      const totalWidth = items.length * (cardWidth + gap) - gap;
+      const viewportWidth = window.innerWidth;
+
+      if (totalWidth <= viewportWidth) {
+        // Static centered row — all cards fit on screen
+        container.innerHTML = `<div class="static-row">${cards}</div>`;
+      } else {
+        // Marquee — cards overflow, so scroll them
+        const wrapper = document.createElement('div');
+        wrapper.className = 'marquee-wrapper';
+        const track = document.createElement('div');
+        track.className = 'marquee-track animate' + (reverse ? ' reverse' : '');
+        track.innerHTML = cards + cards; // duplicate for seamless loop
+        track.style.setProperty('--marquee-duration', `${items.length * 5}s`);
+        wrapper.appendChild(track);
+        container.innerHTML = '';
+        container.appendChild(wrapper);
+      }
     }
 
-    buildMarquee(document.getElementById('readsMarquee'), READS, renderReadCard);
-    buildMarquee(document.getElementById('comingSoonMarquee'), COMING_SOON, renderComingSoonCard);
+    function renderAll() {
+      buildCarousel(document.getElementById('readsContainer'), READS, readCardHTML, false);
+      buildCarousel(document.getElementById('comingSoonContainer'), COMING_SOON, comingSoonCardHTML, true);
+    }
+
+    renderAll();
+    // Re-check on resize (debounced)
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(renderAll, 250);
+    });
   </script>
 </body>
 </html>
