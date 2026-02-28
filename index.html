@@ -38,7 +38,6 @@
       overflow-x: hidden;
     }
 
-    /* Subtle gradient orb behind hero */
     body::before {
       content: '';
       position: fixed;
@@ -55,17 +54,16 @@
     main {
       position: relative;
       z-index: 1;
-      flex: 1;
+      flex: 0 0 auto;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 3rem 1.5rem;
+      padding: 3rem 1.5rem 2rem;
       max-width: 600px;
       width: 100%;
     }
 
-    /* Staggered fade-in animations */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(24px); }
       to { opacity: 1; transform: translateY(0); }
@@ -79,11 +77,6 @@
     @keyframes shimmer {
       0% { background-position: -200% center; }
       100% { background-position: 200% center; }
-    }
-
-    @keyframes pulse {
-      0%, 100% { box-shadow: 0 0 0 0 var(--accent-glow); }
-      50% { box-shadow: 0 0 24px 4px var(--accent-glow); }
     }
 
     .hero {
@@ -101,7 +94,6 @@
       margin-bottom: 0.75rem;
     }
 
-    /* Gradient shimmer on title */
     h1 span {
       background: linear-gradient(90deg, #fff 0%, var(--accent) 50%, #fff 100%);
       background-size: 200% auto;
@@ -141,30 +133,10 @@
       transition: background 0.3s;
     }
 
-    .step:hover {
-      background: #161616;
-    }
-
-    .step-icon {
-      font-size: 1.5rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .step-label {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: #fff;
-      margin-bottom: 0.25rem;
-    }
-
-    .step-desc {
-      font-size: 0.75rem;
-      color: var(--text-dim);
-      line-height: 1.3;
-      flex: 1;
-      display: flex;
-      align-items: flex-start;
-    }
+    .step:hover { background: #161616; }
+    .step-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+    .step-label { font-size: 0.85rem; font-weight: 600; color: #fff; margin-bottom: 0.25rem; }
+    .step-desc { font-size: 0.75rem; color: var(--text-dim); line-height: 1.3; flex: 1; display: flex; align-items: flex-start; }
 
     /* Form card */
     .form-card {
@@ -176,15 +148,8 @@
       animation: fadeUp 0.8s ease-out 0.3s both;
     }
 
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-    }
-
-    .field {
-      position: relative;
-    }
+    form { display: flex; flex-direction: column; gap: 1.25rem; }
+    .field { position: relative; }
 
     label {
       font-size: 0.8rem;
@@ -209,14 +174,8 @@
       transition: border-color 0.25s, box-shadow 0.25s;
     }
 
-    input:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-glow);
-    }
-
-    input::placeholder {
-      color: #3a3a3a;
-    }
+    input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+    input::placeholder { color: #3a3a3a; }
 
     button {
       margin-top: 0.25rem;
@@ -234,34 +193,16 @@
       overflow: hidden;
     }
 
-    button:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 8px 24px rgba(167, 139, 250, 0.25);
-    }
-
-    button:active {
-      transform: translateY(0);
-    }
-
-    button:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
-    }
-
-    /* Loading spinner inside button */
-    button.loading {
-      color: transparent;
-    }
+    button:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(167, 139, 250, 0.25); }
+    button:active { transform: translateY(0); }
+    button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+    button.loading { color: transparent; }
 
     button.loading::after {
       content: '';
       position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 20px;
-      height: 20px;
+      top: 50%; left: 50%;
+      width: 20px; height: 20px;
       margin: -10px 0 0 -10px;
       border: 2px solid rgba(255, 255, 255, 0.3);
       border-top-color: #fff;
@@ -269,11 +210,8 @@
       animation: spin 0.6s linear infinite;
     }
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* Success state — replaces form */
     .success-state {
       display: none;
       flex-direction: column;
@@ -283,14 +221,10 @@
       text-align: center;
     }
 
-    .success-state.visible {
-      display: flex;
-    }
+    .success-state.visible { display: flex; }
 
-    /* Animated checkmark */
     .checkmark-circle {
-      width: 72px;
-      height: 72px;
+      width: 72px; height: 72px;
       border-radius: 50%;
       background: var(--success);
       display: flex;
@@ -322,37 +256,17 @@
     }
 
     .checkmark-circle svg {
-      width: 36px;
-      height: 36px;
-      fill: none;
-      stroke: #fff;
-      stroke-width: 3;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      stroke-dasharray: 36;
-      stroke-dashoffset: 36;
+      width: 36px; height: 36px;
+      fill: none; stroke: #fff; stroke-width: 3;
+      stroke-linecap: round; stroke-linejoin: round;
+      stroke-dasharray: 36; stroke-dashoffset: 36;
       animation: drawCheck 0.4s ease-out 0.35s forwards;
     }
 
-    @keyframes drawCheck {
-      to { stroke-dashoffset: 0; }
-    }
+    @keyframes drawCheck { to { stroke-dashoffset: 0; } }
 
-    .success-title {
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: #fff;
-      margin-bottom: 0.5rem;
-      animation: fadeUp 0.5s ease-out 0.5s both;
-    }
-
-    .success-desc {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      margin-bottom: 2rem;
-      line-height: 1.5;
-      animation: fadeUp 0.5s ease-out 0.6s both;
-    }
+    .success-title { font-size: 1.25rem; font-weight: 600; color: #fff; margin-bottom: 0.5rem; animation: fadeUp 0.5s ease-out 0.5s both; }
+    .success-desc { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 2rem; line-height: 1.5; animation: fadeUp 0.5s ease-out 0.6s both; }
 
     .btn-another {
       padding: 0.85rem 2rem;
@@ -368,71 +282,88 @@
       animation: fadeUp 0.5s ease-out 0.7s both;
     }
 
-    .btn-another:hover {
-      border-color: var(--accent);
-      background: var(--accent-glow);
-    }
+    .btn-another:hover { border-color: var(--accent); background: var(--accent-glow); }
 
-    /* Error status (stays inline below form) */
-    .status {
-      margin-top: 1.25rem;
-      text-align: center;
-      font-size: 0.9rem;
-      min-height: 1.4em;
-      opacity: 0;
-      transition: opacity 0.4s;
-    }
-
+    .status { margin-top: 1.25rem; text-align: center; font-size: 0.9rem; min-height: 1.4em; opacity: 0; transition: opacity 0.4s; }
     .status.visible { opacity: 1; }
     .status.error { color: var(--error); }
 
-    /* Recent reads section */
-    .reads-section {
+    /* ── Marquee Carousel ── */
+    @keyframes marqueeScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .carousel-section {
+      position: relative;
+      z-index: 1;
       width: 100%;
-      margin-top: 3rem;
+      margin-top: 2.5rem;
       animation: fadeUp 0.8s ease-out 0.45s both;
     }
 
-    .reads-header {
-      text-align: center;
-      margin-bottom: 1.5rem;
+    .carousel-section + .carousel-section {
+      margin-top: 2rem;
     }
 
-    .reads-title {
+    .carousel-header {
+      text-align: center;
+      margin-bottom: 1.25rem;
+      padding: 0 1.5rem;
+    }
+
+    .carousel-title {
       font-size: 1.4rem;
       font-weight: 700;
       color: #fff;
       margin-bottom: 0.3rem;
     }
 
-    .reads-subtitle {
+    .carousel-subtitle {
       font-size: 0.85rem;
       color: var(--text-dim);
     }
 
-    .reads-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-
-    .read-card {
-      position: relative;
-      border-radius: 14px;
+    .marquee-wrapper {
+      width: 100%;
       overflow: hidden;
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+      mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 1rem;
+      width: max-content;
+      animation: marqueeScroll var(--marquee-duration, 40s) linear infinite;
+      padding: 0.5rem 0;
+    }
+
+    .marquee-wrapper:hover .marquee-track {
+      animation-play-state: paused;
+    }
+
+    .marquee-wrapper.reverse .marquee-track {
+      animation-direction: reverse;
+    }
+
+    .marquee-card {
+      flex-shrink: 0;
+      width: 155px;
       aspect-ratio: 3 / 4;
-      transition: transform 0.25s, box-shadow 0.25s;
-      opacity: 0;
-      animation: fadeUp 0.5s ease-out both;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
       cursor: default;
+      transition: transform 0.25s, box-shadow 0.25s;
     }
 
-    .read-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+    .marquee-card:hover {
+      transform: scale(1.06);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
     }
 
-    .read-card img {
+    .marquee-card img {
       position: absolute;
       inset: 0;
       width: 100%;
@@ -441,42 +372,50 @@
       display: block;
     }
 
-    /* Gradient overlay at the bottom */
-    .read-overlay {
+    .marquee-card.coming-soon img {
+      filter: grayscale(0.5) brightness(0.6);
+      transition: filter 0.3s;
+    }
+
+    .marquee-card.coming-soon:hover img {
+      filter: grayscale(0.2) brightness(0.75);
+    }
+
+    .marquee-overlay {
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
-      padding: 3.5rem 0.75rem 0.85rem;
+      padding: 2.5rem 0.6rem 0.6rem;
       background: linear-gradient(to top, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.85) 40%, rgba(0,0,0,0.4) 70%, transparent 100%);
       display: flex;
       flex-direction: column;
       align-items: flex-start;
     }
 
-    .read-name {
-      font-size: 0.95rem;
+    .marquee-card .card-name {
+      font-size: 0.78rem;
       font-weight: 600;
       color: #fff;
       line-height: 1.2;
     }
 
-    .read-role {
-      font-size: 0.75rem;
+    .marquee-card .card-role {
+      font-size: 0.62rem;
       color: rgba(255,255,255,0.55);
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.5rem;
       line-height: 1.3;
     }
 
-    .read-btn-notes {
+    .marquee-card .card-btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 0.3rem;
-      padding: 0.5rem 0.85rem;
-      border-radius: 7px;
+      gap: 0.25rem;
+      padding: 0.35rem 0.6rem;
+      border-radius: 6px;
       font-family: inherit;
-      font-size: 0.72rem;
+      font-size: 0.58rem;
       font-weight: 600;
       text-decoration: none;
       white-space: nowrap;
@@ -484,143 +423,48 @@
       color: #fff;
       border: none;
       transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.3rem;
     }
 
-    .read-btn-notes:hover {
+    .marquee-card .card-btn:hover {
       opacity: 0.9;
       transform: translateY(-1px);
       box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35);
     }
 
-    .read-btn-notes svg {
-      width: 11px;
-      height: 11px;
+    .marquee-card .card-btn svg {
+      width: 9px;
+      height: 9px;
       fill: currentColor;
     }
 
-    .read-podcast-link {
-      font-size: 0.65rem;
+    .marquee-card .card-link {
+      font-size: 0.52rem;
       color: rgba(255,255,255,0.4);
       text-decoration: none;
       transition: color 0.2s;
       font-weight: 400;
     }
 
-    .read-podcast-link:hover {
+    .marquee-card .card-link:hover {
       color: rgba(255,255,255,0.7);
-    }
-
-    .reads-toggle {
-      display: none;
-      margin: 1.25rem auto 0;
-      padding: 0.6rem 1.5rem;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background: transparent;
-      color: var(--text-muted);
-      font-family: inherit;
-      font-size: 0.8rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: border-color 0.25s, color 0.25s;
-    }
-
-    .reads-toggle:hover {
-      border-color: var(--accent);
-      color: var(--text);
-    }
-
-    /* Coming Soon section */
-    .coming-soon-section {
-      width: 100%;
-      margin-top: 3rem;
-      animation: fadeUp 0.8s ease-out 0.6s both;
-    }
-
-    .coming-soon-header {
-      text-align: center;
-      margin-bottom: 1.5rem;
-    }
-
-    .coming-soon-title {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 0.3rem;
-    }
-
-    .coming-soon-subtitle {
-      font-size: 0.85rem;
-      color: var(--text-dim);
-    }
-
-    .coming-soon-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-
-    .coming-soon-card {
-      position: relative;
-      border-radius: 14px;
-      overflow: hidden;
-      aspect-ratio: 3 / 4;
-      opacity: 0;
-      animation: fadeUp 0.5s ease-out both;
-      cursor: default;
-    }
-
-    .coming-soon-card img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      filter: grayscale(0.5) brightness(0.6);
-      transition: filter 0.3s;
-    }
-
-    .coming-soon-card:hover img {
-      filter: grayscale(0.2) brightness(0.75);
-    }
-
-    .coming-soon-overlay {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 3.5rem 0.75rem 0.85rem;
-      background: linear-gradient(to top, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.85) 40%, rgba(0,0,0,0.4) 70%, transparent 100%);
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
     }
 
     .coming-soon-badge {
       display: inline-flex;
       align-items: center;
-      gap: 0.3rem;
-      padding: 0.4rem 0.75rem;
-      border-radius: 7px;
+      gap: 0.25rem;
+      padding: 0.3rem 0.55rem;
+      border-radius: 6px;
       font-family: inherit;
-      font-size: 0.68rem;
+      font-size: 0.55rem;
       font-weight: 600;
       letter-spacing: 0.04em;
       text-transform: uppercase;
       background: rgba(255,255,255,0.1);
       color: rgba(255,255,255,0.5);
       border: 1px solid rgba(255,255,255,0.1);
-      margin-bottom: 0.4rem;
-    }
-
-    /* Mobile coming soon */
-    @media (max-width: 420px) {
-      .coming-soon-section { margin-top: 2rem; }
-      .coming-soon-title { font-size: 1.2rem; }
-      .coming-soon-overlay { padding: 2rem 0.6rem 0.6rem; }
-      .coming-soon-badge { font-size: 0.6rem; padding: 0.35rem 0.6rem; }
+      margin-bottom: 0.3rem;
     }
 
     /* Footer */
@@ -644,25 +488,20 @@
     }
 
     footer a:hover { color: var(--text); }
-
-    footer svg {
-      width: 16px;
-      height: 16px;
-      fill: currentColor;
-    }
+    footer svg { width: 16px; height: 16px; fill: currentColor; }
 
     /* Tablet */
     @media (max-width: 600px) {
-      main { padding: 2rem 1.25rem; }
+      main { padding: 2rem 1.25rem 1.5rem; }
       h1 { font-size: 2.4rem; }
       .tagline { font-size: 1.05rem; }
       .form-card { padding: 1.75rem; }
-      .reads-section { margin-top: 2.5rem; }
+      .marquee-card { width: 140px; }
     }
 
     /* Mobile */
     @media (max-width: 420px) {
-      main { padding: 1.5rem 1rem; }
+      main { padding: 1.5rem 1rem 1rem; }
       h1 { font-size: 2rem; }
       .tagline { font-size: 0.95rem; }
       .hero { margin-bottom: 2rem; }
@@ -680,15 +519,15 @@
       .checkmark-circle svg { width: 30px; height: 30px; }
       .success-title { font-size: 1.1rem; }
       .success-desc { font-size: 0.85rem; }
-      .reads-section { margin-top: 2rem; }
-      .reads-title { font-size: 1.2rem; }
-      .reads-grid { grid-template-columns: 1fr 1fr; }
-      .read-card { aspect-ratio: 3 / 4; }
-      .read-overlay { padding: 2rem 0.6rem 0.6rem; }
-      .read-name { font-size: 0.8rem; }
-      .read-role { font-size: 0.65rem; margin-bottom: 0.5rem; }
-      .read-btn-notes { font-size: 0.65rem; padding: 0.4rem 0.7rem; }
-      .read-podcast-link { font-size: 0.58rem; }
+      .carousel-section { margin-top: 2rem; }
+      .carousel-title { font-size: 1.2rem; }
+      .marquee-card { width: 130px; }
+      .marquee-overlay { padding: 2rem 0.5rem 0.5rem; }
+      .marquee-card .card-name { font-size: 0.7rem; }
+      .marquee-card .card-role { font-size: 0.55rem; }
+      .marquee-card .card-btn { font-size: 0.52rem; padding: 0.3rem 0.5rem; }
+      .marquee-card .card-link { font-size: 0.48rem; }
+      .coming-soon-badge { font-size: 0.5rem; }
     }
   </style>
 </head>
@@ -701,17 +540,17 @@
 
     <div class="steps">
       <div class="step">
-        <div class="step-icon">🔗</div>
+        <div class="step-icon">&#128279;</div>
         <div class="step-label">Paste</div>
         <div class="step-desc">Drop any podcast link</div>
       </div>
       <div class="step">
-        <div class="step-icon">⚡</div>
+        <div class="step-icon">&#9889;</div>
         <div class="step-label">We distil</div>
         <div class="step-desc">We extract the key ideas</div>
       </div>
       <div class="step">
-        <div class="step-icon">📖</div>
+        <div class="step-icon">&#128214;</div>
         <div class="step-label">You read</div>
         <div class="step-desc">10-min summary on X</div>
       </div>
@@ -744,23 +583,23 @@
         <button class="btn-another" id="addAnother">Submit another podcast</button>
       </div>
     </div>
-    <section class="reads-section" id="readsSection">
-      <div class="reads-header">
-        <div class="reads-title">Recent reads</div>
-        <div class="reads-subtitle">Podcasts we've summarised so far</div>
-      </div>
-      <div class="reads-grid" id="readsGrid"></div>
-      <button class="reads-toggle" id="readsToggle"></button>
-    </section>
-
-    <section class="coming-soon-section" id="comingSoonSection">
-      <div class="coming-soon-header">
-        <div class="coming-soon-title">Coming soon</div>
-        <div class="coming-soon-subtitle">Currently being summarised</div>
-      </div>
-      <div class="coming-soon-grid" id="comingSoonGrid"></div>
-    </section>
   </main>
+
+  <section class="carousel-section" id="readsSection">
+    <div class="carousel-header">
+      <div class="carousel-title">Recent reads</div>
+      <div class="carousel-subtitle">Podcasts we've summarised so far</div>
+    </div>
+    <div class="marquee-wrapper" id="readsMarquee"></div>
+  </section>
+
+  <section class="carousel-section" id="comingSoonSection">
+    <div class="carousel-header">
+      <div class="carousel-title">Coming soon</div>
+      <div class="carousel-subtitle">Currently being summarised</div>
+    </div>
+    <div class="marquee-wrapper reverse" id="comingSoonMarquee"></div>
+  </section>
 
   <footer>
     <a href="https://x.com/AnishA_Moonka" target="_blank" rel="noopener">
@@ -785,20 +624,16 @@
     function showSuccess() {
       form.style.display = 'none';
       status.style.display = 'none';
-      // Force animation replay by removing and re-adding
       successState.classList.remove('visible');
       void successState.offsetWidth;
       successState.innerHTML = successState.innerHTML;
       successState.classList.add('visible');
-      // Re-attach the button listener
       document.getElementById('addAnother').addEventListener('click', showForm);
     }
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-
       const btn = e.target.querySelector('button');
-
       btn.disabled = true;
       btn.classList.add('loading');
       status.textContent = '';
@@ -817,7 +652,6 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data),
         });
-
         form.reset();
         showSuccess();
       } catch (err) {
@@ -831,9 +665,17 @@
 
     document.getElementById('addAnother').addEventListener('click', showForm);
 
-    // ── Recent Reads ──
-    const V = '9'; // bump this to bust cache
+    // ── Data ──
+    const V = '10'; // bump to bust cache
+
     const READS = [
+      {
+        name: "Tobi Lütke",
+        role: "Founder of Shopify",
+        image: "img/tobi.jpg",
+        notesUrl: "https://x.com/AnishA_Moonka/status/2027623676896850311",
+        podcastUrl: "https://www.youtube.com/watch?v=ZSM2uFnJ5bs"
+      },
       {
         name: "Dan Houser",
         role: "Co-founder of Rockstar Games",
@@ -885,61 +727,12 @@
       }
     ];
 
-    const VISIBLE_COUNT = 4;
-    let showingAll = false;
-
-    function renderCard(read, index) {
-      const delay = 0.5 + index * 0.1;
-      return `
-        <div class="read-card" style="animation-delay: ${delay}s">
-          <img src="${read.image}?v=${V}" alt="${read.name}" loading="lazy">
-          <div class="read-overlay">
-            <div class="read-name">${read.name}</div>
-            <div class="read-role">${read.role}</div>
-            <a class="read-btn-notes" href="${read.notesUrl}" target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
-              Read our notes
-            </a>
-            <a class="read-podcast-link" href="${read.podcastUrl}" target="_blank" rel="noopener">Listen to the original podcast &rarr;</a>
-          </div>
-        </div>`;
-    }
-
-    function renderReads() {
-      const grid = document.getElementById('readsGrid');
-      const toggle = document.getElementById('readsToggle');
-      const visible = showingAll ? READS : READS.slice(0, VISIBLE_COUNT);
-
-      grid.innerHTML = visible.map((r, i) => renderCard(r, i)).join('');
-
-      if (READS.length > VISIBLE_COUNT) {
-        toggle.style.display = 'block';
-        toggle.textContent = showingAll ? 'Show less' : `Show all ${READS.length} reads`;
-      } else {
-        toggle.style.display = 'none';
-      }
-    }
-
-    document.getElementById('readsToggle').addEventListener('click', () => {
-      showingAll = !showingAll;
-      renderReads();
-    });
-
-    renderReads();
-
-    // ── Coming Soon ──
     const COMING_SOON = [
       {
         name: "Brian Cox",
         role: "Physicist & Science Communicator",
         image: "img/briancox.jpg",
         podcastUrl: "https://www.youtube.com/watch?v=bY1EQ6HD-ao"
-      },
-      {
-        name: "Tobi Lütke",
-        role: "Founder of Shopify",
-        image: "img/tobi.jpg",
-        podcastUrl: "https://www.youtube.com/watch?v=ZSM2uFnJ5bs"
       },
       {
         name: "Marc Andreessen",
@@ -949,31 +742,51 @@
       }
     ];
 
-    function renderComingSoonCard(item, index) {
-      const delay = 0.6 + index * 0.1;
+    // ── Marquee Renderers ──
+    function renderReadCard(r) {
       return `
-        <div class="coming-soon-card" style="animation-delay: ${delay}s">
-          <img src="${item.image}?v=${V}" alt="${item.name}" loading="lazy">
-          <div class="coming-soon-overlay">
-            <div class="read-name">${item.name}</div>
-            <div class="read-role">${item.role}</div>
-            <span class="coming-soon-badge">Coming soon</span>
-            <a class="read-podcast-link" href="${item.podcastUrl}" target="_blank" rel="noopener">Listen to the original podcast &rarr;</a>
+        <div class="marquee-card">
+          <img src="${r.image}?v=${V}" alt="${r.name}" loading="lazy">
+          <div class="marquee-overlay">
+            <div class="card-name">${r.name}</div>
+            <div class="card-role">${r.role}</div>
+            <a class="card-btn" href="${r.notesUrl}" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+              Read our notes
+            </a>
+            <a class="card-link" href="${r.podcastUrl}" target="_blank" rel="noopener">Original podcast &rarr;</a>
           </div>
         </div>`;
     }
 
-    function renderComingSoon() {
-      const grid = document.getElementById('comingSoonGrid');
-      const section = document.getElementById('comingSoonSection');
-      if (COMING_SOON.length === 0) {
-        section.style.display = 'none';
-        return;
-      }
-      grid.innerHTML = COMING_SOON.map((item, i) => renderComingSoonCard(item, i)).join('');
+    function renderComingSoonCard(item) {
+      return `
+        <div class="marquee-card coming-soon">
+          <img src="${item.image}?v=${V}" alt="${item.name}" loading="lazy">
+          <div class="marquee-overlay">
+            <div class="card-name">${item.name}</div>
+            <div class="card-role">${item.role}</div>
+            <span class="coming-soon-badge">Coming soon</span>
+            <a class="card-link" href="${item.podcastUrl}" target="_blank" rel="noopener">Original podcast &rarr;</a>
+          </div>
+        </div>`;
     }
 
-    renderComingSoon();
+    function buildMarquee(wrapper, items, renderFn) {
+      if (items.length === 0) {
+        wrapper.closest('.carousel-section').style.display = 'none';
+        return;
+      }
+      const cards = items.map(renderFn).join('');
+      // Duplicate cards for seamless infinite loop
+      wrapper.innerHTML = `<div class="marquee-track">${cards}${cards}</div>`;
+      // Speed: ~4s per card
+      const duration = items.length * 4;
+      wrapper.querySelector('.marquee-track').style.setProperty('--marquee-duration', `${duration}s`);
+    }
+
+    buildMarquee(document.getElementById('readsMarquee'), READS, renderReadCard);
+    buildMarquee(document.getElementById('comingSoonMarquee'), COMING_SOON, renderComingSoonCard);
   </script>
 </body>
 </html>
