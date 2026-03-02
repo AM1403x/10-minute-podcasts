@@ -562,8 +562,15 @@
     document.getElementById('addAnother').addEventListener('click', showForm);
 
     // ── Recent Reads ──
-    const V = '13'; // bump to bust cache
+    const V = '14'; // bump to bust cache
     const READS = [
+      {
+        name: "Elon Musk",
+        role: "Founder of SpaceX & xAI",
+        image: "img/elon.jpg",
+        notesUrl: "https://x.com/AnishA_Moonka/status/2028512166027170028",
+        podcastUrl: "https://www.youtube.com/watch?v=BYXbuik3dgA"
+      },
       {
         name: "Marc Andreessen",
         role: "Co-founder of a16z",
@@ -630,12 +637,6 @@
     ];
 
     const COMING_SOON = [
-      {
-        name: "Elon Musk",
-        role: "Founder of SpaceX & xAI",
-        image: "img/elon.jpg",
-        podcastUrl: "https://www.youtube.com/watch?v=BYXbuik3dgA"
-      },
       {
         name: "Brian Cox",
         role: "Physicist & Science Communicator",
