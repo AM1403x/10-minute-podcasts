@@ -562,8 +562,15 @@
     document.getElementById('addAnother').addEventListener('click', showForm);
 
     // ── Recent Reads ──
-    const V = '15'; // bump to bust cache
+    const V = '16'; // bump to bust cache
     const READS = [
+      {
+        name: "Brian Cox",
+        role: "Physicist & Science Communicator",
+        image: "img/briancox.jpg",
+        notesUrl: "https://x.com/AnishA_Moonka/status/2028771227951837279",
+        podcastUrl: "https://www.youtube.com/watch?v=bY1EQ6HD-ao"
+      },
       {
         name: "Elon Musk",
         role: "Founder of SpaceX & xAI",
@@ -655,12 +662,6 @@
         image: "img/satya.jpg",
         podcastUrl: "https://www.youtube.com/watch?v=L2OPYYthw4c"
       },
-      {
-        name: "Brian Cox",
-        role: "Physicist & Science Communicator",
-        image: "img/briancox.jpg",
-        podcastUrl: "https://www.youtube.com/watch?v=bY1EQ6HD-ao"
-      }
     ];
 
     const VISIBLE_COUNT = 4;
