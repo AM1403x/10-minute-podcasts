@@ -562,8 +562,15 @@
     document.getElementById('addAnother').addEventListener('click', showForm);
 
     // ── Recent Reads ──
-    const V = '19'; // bump to bust cache
+    const V = '20'; // bump to bust cache
     const READS = [
+      {
+        name: "Andrej Karpathy",
+        role: "Founder of Eureka Labs",
+        image: "img/karpathy.jpg",
+        notesUrl: "https://x.com/AnishA_Moonka/status/2029629545830347155",
+        podcastUrl: "https://www.youtube.com/watch?v=lXUZvyajciY"
+      },
       {
         name: "Demis Hassabis",
         role: "Co-founder of Google DeepMind",
@@ -663,12 +670,6 @@
         role: "Head of Claude Code, Anthropic",
         image: "img/boris.jpg",
         podcastUrl: "https://www.youtube.com/watch?v=We7BZVKbCVw"
-      },
-      {
-        name: "Andrej Karpathy",
-        role: "Founder of Eureka Labs",
-        image: "img/karpathy.jpg",
-        podcastUrl: "https://www.youtube.com/watch?v=lXUZvyajciY"
       },
       {
         name: "Dan Sundheim",
