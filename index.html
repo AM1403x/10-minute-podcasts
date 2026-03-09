@@ -689,8 +689,9 @@
     document.getElementById('addAnother').addEventListener('click', showForm);
 
     // ── Recent Reads ──
-    const V = '25'; // bump to bust cache
+    const V = '26'; // bump to bust cache
     const READS = [
+      { name: "Ben Horowitz", role: "Co-founder of a16z", title: "What Makes a Great Founder", year: 2026, notesUrl: "https://x.com/AnishA_Moonka/status/2030726628436058437", sourceUrl: "https://www.youtube.com/watch?v=dFT4xj57D7U" },
       { name: "Dan Sundheim", role: "Founder of D1 Capital Partners", title: "Inside Dan Sundheim's Bets on Anthropic, OpenAI, and SpaceX", year: 2026, notesUrl: "https://x.com/AnishA_Moonka/status/2030370394088284227", sourceUrl: "https://www.youtube.com/watch?v=mBtmTmCC0ZM" },
       { name: "Boris Cherny", role: "Head of Claude Code, Anthropic", title: "What happens after coding is solved", year: 2026, notesUrl: "https://x.com/AnishA_Moonka/status/2030015356383691121", sourceUrl: "https://www.youtube.com/watch?v=We7BZVKbCVw" },
       { name: "Andrej Karpathy", role: "Founder of Eureka Labs", title: "We're summoning ghosts, not building animals", year: 2025, notesUrl: "https://x.com/AnishA_Moonka/status/2029629545830347155", sourceUrl: "https://www.youtube.com/watch?v=lXUZvyajciY" },
@@ -710,7 +711,6 @@
     ];
 
     const COMING_SOON = [
-      { name: "Ben Horowitz", role: "Co-founder of a16z", title: "What Makes a Great Founder", year: 2026, sourceUrl: "https://www.youtube.com/watch?v=dFT4xj57D7U" },
     ];
 
     const VISIBLE_COUNT = 4;
