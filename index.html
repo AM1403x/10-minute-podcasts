@@ -468,23 +468,75 @@
       .list-actions { gap: 0.5rem; margin-left: 0.75rem; }
     }
 
-    /* Show more toggle */
-    .toggle-btn {
-      display: none;
-      margin: 1.25rem auto 0;
-      padding: 0.6rem 1.5rem;
+    /* Search & filter toolbar */
+    .reads-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .search-input {
+      flex: 1;
+      min-width: 140px;
+      padding: 0.55rem 0.75rem 0.55rem 2rem;
       border: 1px solid var(--border);
       border-radius: 8px;
+      background: var(--bg);
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.8rem;
+      outline: none;
+      transition: border-color 0.25s, box-shadow 0.25s;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23555' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: 0.6rem center;
+    }
+
+    .search-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+    .search-input::placeholder { color: #3a3a3a; }
+
+    .filter-pills {
+      display: flex;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-pill {
+      padding: 0.35rem 0.7rem;
+      border: 1px solid var(--border);
+      border-radius: 20px;
       background: transparent;
       color: var(--text-muted);
       font-family: inherit;
-      font-size: 0.8rem;
+      font-size: 0.7rem;
       font-weight: 500;
       cursor: pointer;
-      transition: border-color 0.25s, color 0.25s;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+      white-space: nowrap;
     }
 
-    .toggle-btn:hover { border-color: var(--accent); color: var(--text); }
+    .filter-pill:hover { border-color: var(--border-focus); color: var(--text); }
+
+    .filter-pill.active {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-glow);
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 2rem 0;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 420px) {
+      .reads-toolbar { gap: 0.5rem; }
+      .search-input { min-width: 100%; font-size: 0.75rem; }
+      .filter-pill { font-size: 0.65rem; padding: 0.3rem 0.6rem; }
+    }
 
     /* Footer */
     footer {
@@ -610,8 +662,11 @@
         <div class="section-title">Recent reads</div>
         <div class="section-subtitle">Content we've summarised so far</div>
       </div>
+      <div class="reads-toolbar">
+        <input type="text" class="search-input" id="readsSearch" placeholder="Search by name, title...">
+        <div class="filter-pills" id="filterPills"></div>
+      </div>
       <div class="reads-list" id="readsList"></div>
-      <button class="toggle-btn" id="readsToggle"></button>
     </section>
 
     <section class="section" id="comingSoonSection">
@@ -689,7 +744,7 @@
     document.getElementById('addAnother').addEventListener('click', showForm);
 
     // ── Recent Reads ──
-    const V = '26'; // bump to bust cache
+    const V = '27'; // bump to bust cache
     const READS = [
       { name: "Ben Horowitz", role: "Co-founder of a16z", title: "What Makes a Great Founder", year: 2026, notesUrl: "https://x.com/AnishA_Moonka/status/2030726628436058437", sourceUrl: "https://www.youtube.com/watch?v=dFT4xj57D7U" },
       { name: "Dan Sundheim", role: "Founder of D1 Capital Partners", title: "Inside Dan Sundheim's Bets on Anthropic, OpenAI, and SpaceX", year: 2026, notesUrl: "https://x.com/AnishA_Moonka/status/2030370394088284227", sourceUrl: "https://www.youtube.com/watch?v=mBtmTmCC0ZM" },
@@ -713,8 +768,8 @@
     const COMING_SOON = [
     ];
 
-    const VISIBLE_COUNT = 4;
-    let showingAll = false;
+    let activeYear = null;
+    let searchQuery = '';
 
     function renderListItem(read, index) {
       const delay = 0.3 + index * 0.06;
@@ -734,26 +789,53 @@
         </div>`;
     }
 
+    function getFilteredReads() {
+      return READS.filter(r => {
+        if (activeYear && r.year !== activeYear) return false;
+        if (searchQuery) {
+          const q = searchQuery.toLowerCase();
+          return r.name.toLowerCase().includes(q) ||
+                 r.title.toLowerCase().includes(q) ||
+                 r.role.toLowerCase().includes(q);
+        }
+        return true;
+      });
+    }
+
     function renderReads() {
       const list = document.getElementById('readsList');
-      const toggle = document.getElementById('readsToggle');
-      const visible = showingAll ? READS : READS.slice(0, VISIBLE_COUNT);
+      const filtered = getFilteredReads();
 
-      list.innerHTML = visible.map((r, i) => renderListItem(r, i)).join('');
-
-      if (READS.length > VISIBLE_COUNT) {
-        toggle.style.display = 'block';
-        toggle.textContent = showingAll ? 'Show less' : `Show all ${READS.length} reads`;
+      if (filtered.length === 0) {
+        list.innerHTML = '<div class="no-results">No results found</div>';
       } else {
-        toggle.style.display = 'none';
+        list.innerHTML = filtered.map((r, i) => renderListItem(r, i)).join('');
       }
     }
 
-    document.getElementById('readsToggle').addEventListener('click', () => {
-      showingAll = !showingAll;
+    // Build year filter pills
+    function renderFilterPills() {
+      const years = [...new Set(READS.map(r => r.year))].sort((a, b) => b - a);
+      const container = document.getElementById('filterPills');
+      container.innerHTML = `<button class="filter-pill active" data-year="">All</button>` +
+        years.map(y => `<button class="filter-pill" data-year="${y}">${y}</button>`).join('');
+
+      container.addEventListener('click', (e) => {
+        const pill = e.target.closest('.filter-pill');
+        if (!pill) return;
+        container.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        activeYear = pill.dataset.year ? Number(pill.dataset.year) : null;
+        renderReads();
+      });
+    }
+
+    document.getElementById('readsSearch').addEventListener('input', (e) => {
+      searchQuery = e.target.value.trim();
       renderReads();
     });
 
+    renderFilterPills();
     renderReads();
 
     // ── Coming Soon ──
