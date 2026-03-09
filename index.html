@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <title>10 Minute Podcasts — Hour-long podcasts, summarised into 10-minute reads</title>
+  <title>10 Minute Notes — 10 minute notes from the best books, podcasts, articles & speeches</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -165,8 +165,22 @@
       transition: border-color 0.25s, box-shadow 0.25s;
     }
 
-    input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+    input:focus, select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
     input::placeholder { color: #3a3a3a; }
+
+    select {
+      width: 100%; padding: 0.9rem 1rem;
+      border: 1px solid var(--border); border-radius: 10px;
+      background: var(--bg); color: #fff;
+      font-family: inherit; font-size: 0.95rem; outline: none;
+      transition: border-color 0.25s, box-shadow 0.25s;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23777' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+    }
+    select option { background: var(--bg); color: #fff; }
 
     button {
       margin-top: 0.25rem; padding: 1rem; border: none; border-radius: 10px;
@@ -429,15 +443,15 @@
 <body>
   <main>
     <div class="hero">
-      <h1><span>10 Minute Podcasts</span></h1>
-      <p class="tagline">Hour-long podcasts, summarised into 10-minute reads.</p>
+      <h1><span>10 Minute Notes</span></h1>
+      <p class="tagline">10 minute notes from the best books, podcasts, articles & speeches across the world, curated just for you.</p>
     </div>
 
     <div class="steps">
       <div class="step">
         <div class="step-icon">&#128279;</div>
         <div class="step-label">Paste</div>
-        <div class="step-desc">Drop any podcast link</div>
+        <div class="step-desc">Drop any content link</div>
       </div>
       <div class="step">
         <div class="step-icon">&#9889;</div>
@@ -447,12 +461,12 @@
       <div class="step">
         <div class="step-icon">&#128214;</div>
         <div class="step-label">You read</div>
-        <div class="step-desc">10-min summary on X</div>
+        <div class="step-desc">10-min notes on X</div>
       </div>
     </div>
 
     <div class="form-card">
-      <form id="podcastForm">
+      <form id="contentForm">
         <div class="field">
           <label for="name">Name</label>
           <input type="text" id="name" name="name" placeholder="Your name" required>
@@ -462,10 +476,20 @@
           <input type="email" id="email" name="email" placeholder="you@example.com" required>
         </div>
         <div class="field">
-          <label for="podcastLink">Podcast link</label>
-          <input type="url" id="podcastLink" name="podcastLink" placeholder="https://open.spotify.com/episode/..." required>
+          <label for="contentType">Content type</label>
+          <select id="contentType" name="contentType" required>
+            <option value="" disabled selected>Select type</option>
+            <option value="podcast">Podcast</option>
+            <option value="book">Book</option>
+            <option value="article">Article</option>
+            <option value="speech">Speech</option>
+          </select>
         </div>
-        <button type="submit">Summarise this podcast</button>
+        <div class="field">
+          <label for="contentLink">Content link</label>
+          <input type="url" id="contentLink" name="contentLink" placeholder="https://..." required>
+        </div>
+        <button type="submit">Summarise this</button>
       </form>
       <p class="status" id="status"></p>
 
@@ -474,15 +498,15 @@
           <svg viewBox="0 0 24 24"><polyline points="6 12 10 16 18 8"/></svg>
         </div>
         <div class="success-title">You're all set!</div>
-        <div class="success-desc">We'll summarise this podcast and post it on X soon.</div>
-        <button class="btn-another" id="addAnother">Submit another podcast</button>
+        <div class="success-desc">We'll summarise this and post our notes on X soon.</div>
+        <button class="btn-another" id="addAnother">Submit another</button>
       </div>
     </div>
 
     <section class="section" id="readsSection">
       <div class="section-header">
         <div class="section-title">Recent reads</div>
-        <div class="section-subtitle">Podcasts we've summarised so far</div>
+        <div class="section-subtitle">Content we've summarised so far</div>
       </div>
       <div class="grid" id="readsGrid"></div>
       <button class="toggle-btn" id="readsToggle"></button>
@@ -507,7 +531,7 @@
   <script>
     const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwxRAqsclFVcT-IHW80gZWOOKOoDm-f2CzAhBiRZowjlEujH6yl7VI5hKBzu9_lDauf/exec';
 
-    const form = document.getElementById('podcastForm');
+    const form = document.getElementById('contentForm');
     const successState = document.getElementById('successState');
     const status = document.getElementById('status');
 
@@ -538,7 +562,8 @@
       const data = {
         name: document.getElementById('name').value.trim(),
         email: document.getElementById('email').value.trim(),
-        podcastLink: document.getElementById('podcastLink').value.trim(),
+        contentType: document.getElementById('contentType').value,
+        contentLink: document.getElementById('contentLink').value.trim(),
       };
 
       try {
@@ -562,119 +587,119 @@
     document.getElementById('addAnother').addEventListener('click', showForm);
 
     // ── Recent Reads ──
-    const V = '22'; // bump to bust cache
+    const V = '23'; // bump to bust cache
     const READS = [
       {
         name: "Dan Sundheim",
         role: "Founder of D1 Capital Partners",
         image: "img/sundheim.jpg",
         notesUrl: "https://x.com/AnishA_Moonka/status/2030370394088284227",
-        podcastUrl: "https://www.youtube.com/watch?v=mBtmTmCC0ZM"
+        sourceUrl: "https://www.youtube.com/watch?v=mBtmTmCC0ZM"
       },
       {
         name: "Boris Cherny",
         role: "Head of Claude Code, Anthropic",
         image: "img/boris.jpg",
         notesUrl: "https://x.com/AnishA_Moonka/status/2030015356383691121",
-        podcastUrl: "https://www.youtube.com/watch?v=We7BZVKbCVw"
+        sourceUrl: "https://www.youtube.com/watch?v=We7BZVKbCVw"
       },
       {
         name: "Andrej Karpathy",
         role: "Founder of Eureka Labs",
         image: "img/karpathy.jpg",
         notesUrl: "https://x.com/AnishA_Moonka/status/2029629545830347155",
-        podcastUrl: "https://www.youtube.com/watch?v=lXUZvyajciY"
+        sourceUrl: "https://www.youtube.com/watch?v=lXUZvyajciY"
       },
       {
         name: "Demis Hassabis",
         role: "Co-founder of Google DeepMind",
         image: "img/demis.jpg",
         notesUrl: "https://x.com/AnishA_Moonka/status/2029263417077580075",
-        podcastUrl: "https://www.youtube.com/watch?v=-HzgcbRXUK8"
+        sourceUrl: "https://www.youtube.com/watch?v=-HzgcbRXUK8"
       },
       {
         name: "Satya Nadella",
         role: "CEO of Microsoft",
         image: "img/satya.jpg",
         notesUrl: "https://x.com/AnishA_Moonka/status/2028942905675792765",
-        podcastUrl: "https://www.youtube.com/watch?v=L2OPYYthw4c"
+        sourceUrl: "https://www.youtube.com/watch?v=L2OPYYthw4c"
       },
       {
         name: "Brian Cox",
         role: "Physicist & Science Communicator",
         image: "img/briancox.jpg",
         notesUrl: "https://x.com/AnishA_Moonka/status/2028771227951837279",
-        podcastUrl: "https://www.youtube.com/watch?v=bY1EQ6HD-ao"
+        sourceUrl: "https://www.youtube.com/watch?v=bY1EQ6HD-ao"
       },
       {
         name: "Elon Musk",
         role: "Founder of SpaceX & xAI",
         image: "img/elon.jpg",
         notesUrl: "https://x.com/AnishA_Moonka/status/2028512166027170028",
-        podcastUrl: "https://www.youtube.com/watch?v=BYXbuik3dgA"
+        sourceUrl: "https://www.youtube.com/watch?v=BYXbuik3dgA"
       },
       {
         name: "Marc Andreessen",
         role: "Co-founder of a16z",
         image: "img/andreessen.jpg",
         notesUrl: "https://x.com/AnishA_Moonka/status/2028228263290822922",
-        podcastUrl: "https://www.youtube.com/watch?v=87Pm0SGTtN8"
+        sourceUrl: "https://www.youtube.com/watch?v=87Pm0SGTtN8"
       },
       {
         name: "Tobi Lütke",
         role: "Founder of Shopify",
         image: "img/tobi.jpg",
         notesUrl: "https://x.com/AnishA_Moonka/status/2027623676896850311",
-        podcastUrl: "https://www.youtube.com/watch?v=ZSM2uFnJ5bs"
+        sourceUrl: "https://www.youtube.com/watch?v=ZSM2uFnJ5bs"
       },
       {
         name: "Dan Houser",
         role: "Co-founder of Rockstar Games",
         image: "img/houser.jpg",
         notesUrl: "https://x.com/AnishA_Moonka/status/2027446052144746902",
-        podcastUrl: "https://www.youtube.com/watch?v=o3gbXDjNWyI"
+        sourceUrl: "https://www.youtube.com/watch?v=o3gbXDjNWyI"
       },
       {
         name: "Deepinder Goyal",
         role: "Founder of Zomato",
         image: "img/deepinder.jpg",
         notesUrl: "https://x.com/AnishA_Moonka/status/2027300950764138826",
-        podcastUrl: "https://www.youtube.com/watch?v=Xik34jh-doc"
+        sourceUrl: "https://www.youtube.com/watch?v=Xik34jh-doc"
       },
       {
         name: "Jensen Huang",
         role: "Founder of NVIDIA",
         image: "img/jensen.jpg",
         notesUrl: "https://x.com/AnishA_Moonka/status/2026947777952129109",
-        podcastUrl: "https://www.youtube.com/watch?v=8FOdAc_i_tM"
+        sourceUrl: "https://www.youtube.com/watch?v=8FOdAc_i_tM"
       },
       {
         name: "Dario Amodei",
         role: "Founder of Anthropic",
         image: "img/amodei.jpg",
         notesUrl: "https://x.com/twitter/status/2026283213925077200",
-        podcastUrl: "https://youtu.be/68ylaeBbdsg?si=3w6G9Lw4PaR1A_0e"
+        sourceUrl: "https://youtu.be/68ylaeBbdsg?si=3w6G9Lw4PaR1A_0e"
       },
       {
         name: "Pavel Durov",
         role: "Founder of Telegram",
         image: "img/durov.jpg",
         notesUrl: "https://x.com/AnishA_Moonka/status/2026572845640241222",
-        podcastUrl: "https://www.youtube.com/watch?v=qjPH9njnaVU"
+        sourceUrl: "https://www.youtube.com/watch?v=qjPH9njnaVU"
       },
       {
         name: "Dietrich Mateschitz",
         role: "Founder of Red Bull",
         image: "img/mateschitz.jpg",
         notesUrl: "https://x.com/AnishA_Moonka/status/2026634935902286108",
-        podcastUrl: "https://www.youtube.com/watch?v=798LBCW-u2M&t=32s"
+        sourceUrl: "https://www.youtube.com/watch?v=798LBCW-u2M&t=32s"
       },
       {
         name: "Naval Ravikant",
         role: "Founder of AngelList",
         image: "img/naval.jpg",
         notesUrl: "https://x.com/AnishA_Moonka/status/2026221390010212806",
-        podcastUrl: "https://www.youtube.com/watch?v=sXCKgEl9hBo"
+        sourceUrl: "https://www.youtube.com/watch?v=sXCKgEl9hBo"
       }
     ];
 
@@ -683,7 +708,7 @@
         name: "Ben Horowitz",
         role: "Co-founder of a16z",
         image: "img/benhorowitz.jpg",
-        podcastUrl: "https://www.youtube.com/watch?v=dFT4xj57D7U"
+        sourceUrl: "https://www.youtube.com/watch?v=dFT4xj57D7U"
       },
     ];
 
@@ -702,7 +727,7 @@
               <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
               Read our notes
             </a>
-            <a class="card-link" href="${read.podcastUrl}" target="_blank" rel="noopener">Listen to the original podcast &rarr;</a>
+            <a class="card-link" href="${read.sourceUrl}" target="_blank" rel="noopener">Original source &rarr;</a>
           </div>
         </div>`;
     }
@@ -739,7 +764,7 @@
             <div class="card-name">${item.name}</div>
             <div class="card-role">${item.role}</div>
             <span class="coming-soon-badge">Coming soon</span>
-            <a class="card-link" href="${item.podcastUrl}" target="_blank" rel="noopener">Listen to the original podcast &rarr;</a>
+            <a class="card-link" href="${item.sourceUrl}" target="_blank" rel="noopener">Original source &rarr;</a>
           </div>
         </div>`;
     }
