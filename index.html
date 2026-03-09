@@ -404,10 +404,17 @@
       line-height: 1.3;
     }
 
-    .list-role {
+    .list-title {
       font-size: 0.78rem;
       color: var(--text-muted);
       line-height: 1.3;
+    }
+
+    .list-year {
+      font-size: 0.72rem;
+      font-weight: 400;
+      color: var(--text-dim);
+      margin-left: 0.35rem;
     }
 
     .list-actions {
@@ -455,7 +462,7 @@
     @media (max-width: 420px) {
       .list-item { padding: 0.85rem 0; }
       .list-name { font-size: 0.85rem; }
-      .list-role { font-size: 0.7rem; }
+      .list-title { font-size: 0.7rem; }
       .list-btn { font-size: 0.65rem; padding: 0.35rem 0.6rem; }
       .list-source { font-size: 0.58rem; }
       .list-actions { gap: 0.5rem; margin-left: 0.75rem; }
@@ -612,7 +619,7 @@
         <div class="section-title">Coming soon</div>
         <div class="section-subtitle">Currently being summarised</div>
       </div>
-      <div class="grid" id="comingSoonGrid"></div>
+      <div class="reads-list" id="comingSoonList"></div>
     </section>
   </main>
 
@@ -682,129 +689,28 @@
     document.getElementById('addAnother').addEventListener('click', showForm);
 
     // ── Recent Reads ──
-    const V = '24'; // bump to bust cache
+    const V = '25'; // bump to bust cache
     const READS = [
-      {
-        name: "Dan Sundheim",
-        role: "Founder of D1 Capital Partners",
-        image: "img/sundheim.jpg",
-        notesUrl: "https://x.com/AnishA_Moonka/status/2030370394088284227",
-        sourceUrl: "https://www.youtube.com/watch?v=mBtmTmCC0ZM"
-      },
-      {
-        name: "Boris Cherny",
-        role: "Head of Claude Code, Anthropic",
-        image: "img/boris.jpg",
-        notesUrl: "https://x.com/AnishA_Moonka/status/2030015356383691121",
-        sourceUrl: "https://www.youtube.com/watch?v=We7BZVKbCVw"
-      },
-      {
-        name: "Andrej Karpathy",
-        role: "Founder of Eureka Labs",
-        image: "img/karpathy.jpg",
-        notesUrl: "https://x.com/AnishA_Moonka/status/2029629545830347155",
-        sourceUrl: "https://www.youtube.com/watch?v=lXUZvyajciY"
-      },
-      {
-        name: "Demis Hassabis",
-        role: "Co-founder of Google DeepMind",
-        image: "img/demis.jpg",
-        notesUrl: "https://x.com/AnishA_Moonka/status/2029263417077580075",
-        sourceUrl: "https://www.youtube.com/watch?v=-HzgcbRXUK8"
-      },
-      {
-        name: "Satya Nadella",
-        role: "CEO of Microsoft",
-        image: "img/satya.jpg",
-        notesUrl: "https://x.com/AnishA_Moonka/status/2028942905675792765",
-        sourceUrl: "https://www.youtube.com/watch?v=L2OPYYthw4c"
-      },
-      {
-        name: "Brian Cox",
-        role: "Physicist & Science Communicator",
-        image: "img/briancox.jpg",
-        notesUrl: "https://x.com/AnishA_Moonka/status/2028771227951837279",
-        sourceUrl: "https://www.youtube.com/watch?v=bY1EQ6HD-ao"
-      },
-      {
-        name: "Elon Musk",
-        role: "Founder of SpaceX & xAI",
-        image: "img/elon.jpg",
-        notesUrl: "https://x.com/AnishA_Moonka/status/2028512166027170028",
-        sourceUrl: "https://www.youtube.com/watch?v=BYXbuik3dgA"
-      },
-      {
-        name: "Marc Andreessen",
-        role: "Co-founder of a16z",
-        image: "img/andreessen.jpg",
-        notesUrl: "https://x.com/AnishA_Moonka/status/2028228263290822922",
-        sourceUrl: "https://www.youtube.com/watch?v=87Pm0SGTtN8"
-      },
-      {
-        name: "Tobi Lütke",
-        role: "Founder of Shopify",
-        image: "img/tobi.jpg",
-        notesUrl: "https://x.com/AnishA_Moonka/status/2027623676896850311",
-        sourceUrl: "https://www.youtube.com/watch?v=ZSM2uFnJ5bs"
-      },
-      {
-        name: "Dan Houser",
-        role: "Co-founder of Rockstar Games",
-        image: "img/houser.jpg",
-        notesUrl: "https://x.com/AnishA_Moonka/status/2027446052144746902",
-        sourceUrl: "https://www.youtube.com/watch?v=o3gbXDjNWyI"
-      },
-      {
-        name: "Deepinder Goyal",
-        role: "Founder of Zomato",
-        image: "img/deepinder.jpg",
-        notesUrl: "https://x.com/AnishA_Moonka/status/2027300950764138826",
-        sourceUrl: "https://www.youtube.com/watch?v=Xik34jh-doc"
-      },
-      {
-        name: "Jensen Huang",
-        role: "Founder of NVIDIA",
-        image: "img/jensen.jpg",
-        notesUrl: "https://x.com/AnishA_Moonka/status/2026947777952129109",
-        sourceUrl: "https://www.youtube.com/watch?v=8FOdAc_i_tM"
-      },
-      {
-        name: "Dario Amodei",
-        role: "Founder of Anthropic",
-        image: "img/amodei.jpg",
-        notesUrl: "https://x.com/twitter/status/2026283213925077200",
-        sourceUrl: "https://youtu.be/68ylaeBbdsg?si=3w6G9Lw4PaR1A_0e"
-      },
-      {
-        name: "Pavel Durov",
-        role: "Founder of Telegram",
-        image: "img/durov.jpg",
-        notesUrl: "https://x.com/AnishA_Moonka/status/2026572845640241222",
-        sourceUrl: "https://www.youtube.com/watch?v=qjPH9njnaVU"
-      },
-      {
-        name: "Dietrich Mateschitz",
-        role: "Founder of Red Bull",
-        image: "img/mateschitz.jpg",
-        notesUrl: "https://x.com/AnishA_Moonka/status/2026634935902286108",
-        sourceUrl: "https://www.youtube.com/watch?v=798LBCW-u2M&t=32s"
-      },
-      {
-        name: "Naval Ravikant",
-        role: "Founder of AngelList",
-        image: "img/naval.jpg",
-        notesUrl: "https://x.com/AnishA_Moonka/status/2026221390010212806",
-        sourceUrl: "https://www.youtube.com/watch?v=sXCKgEl9hBo"
-      }
+      { name: "Dan Sundheim", role: "Founder of D1 Capital Partners", title: "Inside Dan Sundheim's Bets on Anthropic, OpenAI, and SpaceX", year: 2025, notesUrl: "https://x.com/AnishA_Moonka/status/2030370394088284227", sourceUrl: "https://www.youtube.com/watch?v=mBtmTmCC0ZM" },
+      { name: "Boris Cherny", role: "Head of Claude Code, Anthropic", title: "What happens after coding is solved", year: 2025, notesUrl: "https://x.com/AnishA_Moonka/status/2030015356383691121", sourceUrl: "https://www.youtube.com/watch?v=We7BZVKbCVw" },
+      { name: "Andrej Karpathy", role: "Founder of Eureka Labs", title: "We're summoning ghosts, not building animals", year: 2025, notesUrl: "https://x.com/AnishA_Moonka/status/2029629545830347155", sourceUrl: "https://www.youtube.com/watch?v=lXUZvyajciY" },
+      { name: "Demis Hassabis", role: "Co-founder of Google DeepMind", title: "Future of AI, Simulating Reality, Physics and Video Games", year: 2025, notesUrl: "https://x.com/AnishA_Moonka/status/2029263417077580075", sourceUrl: "https://www.youtube.com/watch?v=-HzgcbRXUK8" },
+      { name: "Satya Nadella", role: "CEO of Microsoft", title: "Lessons from Microsoft's history apply to today's boom", year: 2025, notesUrl: "https://x.com/AnishA_Moonka/status/2028942905675792765", sourceUrl: "https://www.youtube.com/watch?v=L2OPYYthw4c" },
+      { name: "Brian Cox", role: "Physicist & Science Communicator", title: "What Bothers Physicists About Black Holes", year: 2025, notesUrl: "https://x.com/AnishA_Moonka/status/2028771227951837279", sourceUrl: "https://www.youtube.com/watch?v=bY1EQ6HD-ao" },
+      { name: "Elon Musk", role: "Founder of SpaceX & xAI", title: "In 36 months, the cheapest place to put AI will be space", year: 2025, notesUrl: "https://x.com/AnishA_Moonka/status/2028512166027170028", sourceUrl: "https://www.youtube.com/watch?v=BYXbuik3dgA" },
+      { name: "Marc Andreessen", role: "Co-founder of a16z", title: "The real AI boom hasn't even started yet", year: 2025, notesUrl: "https://x.com/AnishA_Moonka/status/2028228263290822922", sourceUrl: "https://www.youtube.com/watch?v=87Pm0SGTtN8" },
+      { name: "Tobi Lütke", role: "Founder of Shopify", title: "21 Years of Building Shopify", year: 2025, notesUrl: "https://x.com/AnishA_Moonka/status/2027623676896850311", sourceUrl: "https://www.youtube.com/watch?v=ZSM2uFnJ5bs" },
+      { name: "Dan Houser", role: "Co-founder of Rockstar Games", title: "GTA, Red Dead Redemption & the Future of Gaming", year: 2025, notesUrl: "https://x.com/AnishA_Moonka/status/2027446052144746902", sourceUrl: "https://www.youtube.com/watch?v=o3gbXDjNWyI" },
+      { name: "Deepinder Goyal", role: "Founder of Zomato", title: "10-Min Delivery, Founder Mindset & Business In India", year: 2025, notesUrl: "https://x.com/AnishA_Moonka/status/2027300950764138826", sourceUrl: "https://www.youtube.com/watch?v=Xik34jh-doc" },
+      { name: "Jensen Huang", role: "Founder of NVIDIA", title: "Jensen Huang: Founder and CEO of NVIDIA", year: 2025, notesUrl: "https://x.com/AnishA_Moonka/status/2026947777952129109", sourceUrl: "https://www.youtube.com/watch?v=8FOdAc_i_tM" },
+      { name: "Dario Amodei", role: "Founder of Anthropic", title: "The hidden pattern behind every AI breakthrough", year: 2024, notesUrl: "https://x.com/twitter/status/2026283213925077200", sourceUrl: "https://youtu.be/68ylaeBbdsg?si=3w6G9Lw4PaR1A_0e" },
+      { name: "Pavel Durov", role: "Founder of Telegram", title: "Telegram, Freedom, Censorship, Money & Human Nature", year: 2024, notesUrl: "https://x.com/AnishA_Moonka/status/2026572845640241222", sourceUrl: "https://www.youtube.com/watch?v=qjPH9njnaVU" },
+      { name: "Dietrich Mateschitz", role: "Founder of Red Bull", title: "Red Bull's Billionaire Maniac Founder", year: 2023, notesUrl: "https://x.com/AnishA_Moonka/status/2026634935902286108", sourceUrl: "https://www.youtube.com/watch?v=798LBCW-u2M&t=32s" },
+      { name: "Naval Ravikant", role: "Founder of AngelList", title: "How to Get Rich Without Getting Lucky", year: 2019, notesUrl: "https://x.com/AnishA_Moonka/status/2026221390010212806", sourceUrl: "https://www.youtube.com/watch?v=sXCKgEl9hBo" },
     ];
 
     const COMING_SOON = [
-      {
-        name: "Ben Horowitz",
-        role: "Co-founder of a16z",
-        image: "img/benhorowitz.jpg",
-        sourceUrl: "https://www.youtube.com/watch?v=dFT4xj57D7U"
-      },
+      { name: "Ben Horowitz", role: "Co-founder of a16z", title: "What Makes a Great Founder", year: 2024, sourceUrl: "https://www.youtube.com/watch?v=dFT4xj57D7U" },
     ];
 
     const VISIBLE_COUNT = 4;
@@ -815,8 +721,8 @@
       return `
         <div class="list-item" style="animation-delay: ${delay}s">
           <div class="list-info">
-            <div class="list-name">${read.name}</div>
-            <div class="list-role">${read.role}</div>
+            <div class="list-name">${read.name} <span class="list-year">${read.year}</span></div>
+            <div class="list-title">${read.title}</div>
           </div>
           <div class="list-actions">
             <a class="list-source" href="${read.sourceUrl}" target="_blank" rel="noopener">Source &rarr;</a>
@@ -851,28 +757,29 @@
     renderReads();
 
     // ── Coming Soon ──
-    function renderComingSoonCard(item, index) {
-      const delay = 0.5 + index * 0.1;
+    function renderComingSoonItem(item, index) {
+      const delay = 0.3 + index * 0.06;
       return `
-        <div class="card coming-soon" style="animation-delay: ${delay}s">
-          <img src="${item.image}?v=${V}" alt="${item.name}" loading="lazy">
-          <div class="card-overlay">
-            <div class="card-name">${item.name}</div>
-            <div class="card-role">${item.role}</div>
+        <div class="list-item" style="animation-delay: ${delay}s">
+          <div class="list-info">
+            <div class="list-name">${item.name} <span class="list-year">${item.year}</span></div>
+            <div class="list-title">${item.title}</div>
+          </div>
+          <div class="list-actions">
+            <a class="list-source" href="${item.sourceUrl}" target="_blank" rel="noopener">Source &rarr;</a>
             <span class="coming-soon-badge">Coming soon</span>
-            <a class="card-link" href="${item.sourceUrl}" target="_blank" rel="noopener">Original source &rarr;</a>
           </div>
         </div>`;
     }
 
     function renderComingSoon() {
-      const grid = document.getElementById('comingSoonGrid');
+      const list = document.getElementById('comingSoonList');
       const section = document.getElementById('comingSoonSection');
       if (COMING_SOON.length === 0) {
         section.style.display = 'none';
         return;
       }
-      grid.innerHTML = COMING_SOON.map((item, i) => renderComingSoonCard(item, i)).join('');
+      list.innerHTML = COMING_SOON.map((item, i) => renderComingSoonItem(item, i)).join('');
     }
 
     renderComingSoon();
